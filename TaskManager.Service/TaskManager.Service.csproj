@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D712B761-AE39-4E99-86EB-65D7A5CBF4F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TaskManager.Service</RootNamespace>
+    <AssemblyName>TaskManager.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonProcess, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZW.CommonProcess.1.1.0\lib\net40\CommonProcess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseService.cs" />
+    <Compile Include="Core\ErrorConverter.cs" />
+    <Compile Include="Core\ITmProcessConfig.cs" />
+    <Compile Include="Core\TmBaseCoreOperateProcess.cs" />
+    <Compile Include="Core\TmBaseDependentProvider.cs" />
+    <Compile Include="Core\TmOperateProcess.cs" />
+    <Compile Include="Core\TmOperateProcessWithResult.cs" />
+    <Compile Include="Core\TmProcessConfig.cs" />
+    <Compile Include="Core\TmQueryProcess.cs" />
+    <Compile Include="Factory\IServiceContainer.cs" />
+    <Compile Include="Factory\ServiceContainer.cs" />
+    <Compile Include="Factory\ServiceLocator.cs" />
+    <Compile Include="Helper\RepositoryHelper.cs" />
+    <Compile Include="Interfaces\Org\IUserService.cs" />
+    <Compile Include="OperateDependentFactory\DependentContainer.cs" />
+    <Compile Include="OperateDependentFactory\IDependentContainer.cs" />
+    <Compile Include="OperateDependentFactory\OperateDependentLocator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceConfig.cs" />
+    <Compile Include="Service\Org\OrgOperator\Operator\LoginOperator.cs" />
+    <Compile Include="Service\Org\OrgOperator\Queryer\UserByIdQueryer.cs" />
+    <Compile Include="Service\Org\UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.DB\TaskManager.DB.csproj">
+      <Project>{6a316afd-360b-456f-87e3-c26fcb181d78}</Project>
+      <Name>TaskManager.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.LogicEntity\TaskManager.LogicEntity.csproj">
+      <Project>{0abcf9fa-905a-447b-acab-a1437095a0d9}</Project>
+      <Name>TaskManager.LogicEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.Repository\TaskManager.Repository.csproj">
+      <Project>{444764c9-e896-45eb-9fd2-e7e8bb6273b5}</Project>
+      <Name>TaskManager.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

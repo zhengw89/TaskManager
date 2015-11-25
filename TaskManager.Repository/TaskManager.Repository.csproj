@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{444764C9-E896-45EB-9FD2-E7E8BB6273B5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TaskManager.Repository</RootNamespace>
+    <AssemblyName>TaskManager.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseQuery.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Converter\ModelConvertorHelper.cs" />
+    <Compile Include="Converter\Org\UserConverter.cs" />
+    <Compile Include="Factory\IRepositoryContainer.cs" />
+    <Compile Include="Factory\Register\BaseRepositoryContainerRegister.cs" />
+    <Compile Include="Factory\Register\MySqlRepositoryContainerRegister.cs" />
+    <Compile Include="Factory\Register\SqlServerRepositoryContainerRegister.cs" />
+    <Compile Include="Factory\RepositoryContainer.cs" />
+    <Compile Include="Factory\RepositoryLocator.cs" />
+    <Compile Include="Interfaces\Org\IUserRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Base\Org\BaseUserRepository.cs" />
+    <Compile Include="Repositories\MySql\Org\MsUserRepository.cs" />
+    <Compile Include="Repositories\SqlServer\Org\SsUserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.DBEntity\TaskManager.DBEntity.csproj">
+      <Project>{55e3b65b-6b48-446f-85f4-1e196e3f86b7}</Project>
+      <Name>TaskManager.DBEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.DB\TaskManager.DB.csproj">
+      <Project>{6a316afd-360b-456f-87e3-c26fcb181d78}</Project>
+      <Name>TaskManager.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.LogicEntity\TaskManager.LogicEntity.csproj">
+      <Project>{0abcf9fa-905a-447b-acab-a1437095a0d9}</Project>
+      <Name>TaskManager.LogicEntity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
