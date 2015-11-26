@@ -22,12 +22,30 @@ namespace TaskManager
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            RegsiterDevRoutes(routes);
             RegisterOrgRoutes(routes);
+            RegisterTaskRoutes(routes);
 
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}",
                 new { controller = "LogIn", action = "Index" }
+            );
+        }
+
+        private static void RegsiterDevRoutes(RouteCollection routes)
+        {
+            //节点列表
+            routes.MapRoute(
+                "Nodes",
+                "Nodes/{pageIndex}",
+                new { controller = "Node", action = "Index", pageIndex = UrlParameter.Optional }
+            );
+            //创建节点
+            routes.MapRoute(
+                "NodeCreate",
+                "NodeCreate",
+                new { controller = "Node", action = "Create" }
             );
         }
 
@@ -38,6 +56,22 @@ namespace TaskManager
                 "Users",
                 "Users/{pageIndex}",
                 new { controller = "User", action = "Index", pageIndex = UrlParameter.Optional }
+            );
+        }
+
+        private static void RegisterTaskRoutes(RouteCollection routes)
+        {
+            //任务列表
+            routes.MapRoute(
+                "Tasks",
+                "Tasks/{pageIndex}",
+                new { controller = "Task", action = "Index", pageIndex = UrlParameter.Optional }
+            );
+            //创建任务
+            routes.MapRoute(
+                "TaskCreate",
+                "TaskCreate",
+                new { controller = "Task", action = "Create" }
             );
         }
 

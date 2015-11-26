@@ -38,7 +38,7 @@ namespace TaskManager.Helper.CustomHtmlHelper
             }
 
             // next link
-            string nextLink = (pagingInfo.CurrentPageIndex == pagingInfo.TotalPageCount)
+            string nextLink = (pagingInfo.CurrentPageIndex >= pagingInfo.TotalPageCount)
                 ? pagingBuilder.BuildHtmlItem(pageUrl(pagingInfo.CurrentPageIndex + 1), "Next", false, true)
                 : pagingBuilder.BuildHtmlItem(pageUrl(pagingInfo.CurrentPageIndex + 1), "Next");
             result.Append(nextLink);

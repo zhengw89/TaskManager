@@ -1,5 +1,9 @@
-﻿using TaskManager.Service.Service.Org.OrgOperator.Operator;
-using TaskManager.Service.Service.Org.OrgOperator.Queryer;
+﻿using TaskManager.Service.Service.Dev.NodeOperator.Creator;
+using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
+using TaskManager.Service.Service.Org.UserOperator.Operator;
+using TaskManager.Service.Service.Org.UserOperator.Queryer;
+using TaskManager.Service.Service.Ta.TaskOperator.Creator;
+using TaskManager.Service.Service.Ta.TaskOperator.Queryer;
 
 namespace TaskManager.Service.OperateDependentFactory
 {
@@ -18,13 +22,29 @@ namespace TaskManager.Service.OperateDependentFactory
 
         private void RegisterDefaults(IDependentContainer container)
         {
+            this.RegistDev(container);
             this.RegistOrg(container);
+            this.RegistTask(container);
+        }
+
+        private void RegistDev(IDependentContainer container)
+        {
+            container.Register<AllNodeQueryer>(db => new AllNodeQueryerDependent(db));
+            container.Register<NodeByConditionQueryer>(db => new NodeByConditionQueryerDependent(db));
+            container.Register<NodeCreator>(db => new NodeCreatorDependent(db));
         }
 
         private void RegistOrg(IDependentContainer container)
         {
             container.Register<LoginOperator>(db => new LoginOperatorDependent(db));
             container.Register<UserByIdQueryer>(db => new UserByIdQueryerDependent(db));
+            container.Register<UserByConditionQueryer>(db => new UserByConditionQueryerDependent(db));
+        }
+
+        private void RegistTask(IDependentContainer container)
+        {
+            container.Register<TaskByConditionQueryer>(db => new TaskByConditionQueryerDependent(db));
+            container.Register<TaskCreator>(db => new TaskCreatorDependent(db));
         }
     }
 }

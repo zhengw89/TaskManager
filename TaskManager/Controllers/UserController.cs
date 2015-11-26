@@ -1,9 +1,10 @@
 ﻿using System.Web.Mvc;
 using TaskManager.Controllers.Base;
+using TaskManager.Service.Interfaces.Org;
 
 namespace TaskManager.Controllers
 {
-    public class UserController:WebBaseController
+    public class UserController : WebBaseController
     {
         protected override string GetPageCategoryName()
         {
@@ -14,7 +15,9 @@ namespace TaskManager.Controllers
 
         public ActionResult Index(int pageIndex = 1)
         {
-            return base.ReturnView();
+            var serivce = base.ResolveService<IUserService>();
+            var result = serivce.GetByCondition(pageIndex, DefaultPageSize);
+            return base.ReturnView(result);
         }
 
         #endregion

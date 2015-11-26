@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TaskManager.DB;
+﻿using TaskManager.DB;
 using TaskManager.DBEntity.ORG;
+using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Org;
 using TaskManager.Repository.Converter.Org;
 using TaskManager.Repository.Interfaces.Org;
@@ -40,6 +37,14 @@ namespace TaskManager.Repository.Repositories.Base.Org
         public User Get(string userId)
         {
             return base.BaseQuery.Equal("OU_Id", userId).Equal(IsActive, true).SingleOrDefault().FromT();
+        }
+
+        public PagedList<User> GetByCondition(int pageIndex, int pageSize)
+        {
+            return base.ConvertToPagedList(
+                base.BaseQuery.Equal(IsActive, true)
+                    .OrderBy("OU_Name")
+                    .QueryByPage(pageIndex, pageSize));
         }
     }
 }

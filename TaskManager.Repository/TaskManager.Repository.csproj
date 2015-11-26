@@ -41,19 +41,29 @@
   <ItemGroup>
     <Compile Include="BaseQuery.cs" />
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="Converter\Dev\NodeConverter.cs" />
     <Compile Include="Converter\ModelConvertorHelper.cs" />
     <Compile Include="Converter\Org\UserConverter.cs" />
+    <Compile Include="Converter\Ta\TaskConverter.cs" />
     <Compile Include="Factory\IRepositoryContainer.cs" />
     <Compile Include="Factory\Register\BaseRepositoryContainerRegister.cs" />
     <Compile Include="Factory\Register\MySqlRepositoryContainerRegister.cs" />
     <Compile Include="Factory\Register\SqlServerRepositoryContainerRegister.cs" />
     <Compile Include="Factory\RepositoryContainer.cs" />
     <Compile Include="Factory\RepositoryLocator.cs" />
+    <Compile Include="Interfaces\Dev\INodeRepository.cs" />
     <Compile Include="Interfaces\Org\IUserRepository.cs" />
+    <Compile Include="Interfaces\Ta\ITaskRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Base\Dev\BaseNodeRepository.cs" />
     <Compile Include="Repositories\Base\Org\BaseUserRepository.cs" />
+    <Compile Include="Repositories\Base\Ta\BaseTaskRepository.cs" />
+    <Compile Include="Repositories\MySql\Dev\MsNodeRepository.cs" />
     <Compile Include="Repositories\MySql\Org\MsUserRepository.cs" />
+    <Compile Include="Repositories\MySql\Ta\MsTaskRepository.cs" />
+    <Compile Include="Repositories\SqlServer\Dev\SsNodeRepository.cs" />
     <Compile Include="Repositories\SqlServer\Org\SsUserRepository.cs" />
+    <Compile Include="Repositories\SqlServer\Ta\SsTaskRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaskManager.DBEntity\TaskManager.DBEntity.csproj">

@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbBaseEntity.cs" />
+    <Compile Include="DEV\T_DEV_NODE.cs" />
     <Compile Include="ORG\T_ORG_USER.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TA\T_TASK.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaskManager.DB\TaskManager.DB.csproj">

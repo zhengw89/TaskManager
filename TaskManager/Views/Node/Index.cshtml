@@ -1,0 +1,45 @@
+﻿@using TaskManager.Helper.CustomHtmlHelper
+@using TaskManager.LogicEntity;
+@using TaskManager.LogicEntity.Entities;
+@using TaskManager.LogicEntity.Entities.Dev;
+@model TmProcessResult<PagedList<Node>>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (Model.HasError)
+{
+    <h3>Error:@Model.Error.Message</h3>
+}
+else
+{
+    
+    @Html.RouteLink("NodeCreate", "NodeCreate")
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>IP</th>
+            <th>Port</th>
+            <th>Remark</th>
+            <th>CreateTime</th>
+        </thead>
+        <tbody>
+            @foreach (var node in @Model.Data)
+            {
+                <tr>
+                    <td>@node.Name</td>
+                    <td>@node.IP</td>
+                    <td>@node.Port</td>
+                    <td>@node.Remark</td>
+                    <td>@node.CreateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <ul class="pagination">
+        @Html.PageLinks(@Model.Data, x => Url.Action("Index", new { pageIndex = x }))
+    </ul>
+}

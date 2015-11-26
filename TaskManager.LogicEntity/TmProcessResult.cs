@@ -4,6 +4,7 @@
     {
         public TmProcessError Error { get; set; }
         public T Data { get; set; }
+        public bool HasError { get { return this.Error != null; } }
 
         public TmProcessResult() { }
         public TmProcessResult(T data)

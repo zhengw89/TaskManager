@@ -21,7 +21,8 @@ namespace TaskManager.Controllers.Base
                 WebConfigHelper.Instance.DbInfo.ConnectionProvider,
                 WebConfigHelper.Instance.DbInfo.DbType,
                 ContextHelper.GetCurrentUserId(),
-                ContextHelper.GetCurrentUserName());
+                ContextHelper.GetCurrentUserName(),
+                Server.MapPath("~"));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Org;
 
 namespace TaskManager.Repository.Interfaces.Org
@@ -13,5 +14,7 @@ namespace TaskManager.Repository.Interfaces.Org
         bool Create(User user);
 
         User Get(string userId);
+
+        PagedList<User> GetByCondition(int pageIndex, int pageSize);
     }
 }

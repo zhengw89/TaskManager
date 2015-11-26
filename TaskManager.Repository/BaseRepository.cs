@@ -88,7 +88,7 @@ namespace TaskManager.Repository
             return source.Select(FromT).ToList();
         }
 
-        protected PagedList<TL> ConvertToPagedList(OrmPagedList<TD> source)
+        protected PagedList<TL> ConvertToPagedList(PagedList<TD> source)
         {
             if (source == null) return null;
             var result = new PagedList<TL>()

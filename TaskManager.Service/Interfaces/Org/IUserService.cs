@@ -1,4 +1,5 @@
 ﻿using TaskManager.LogicEntity;
+using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Org;
 
 namespace TaskManager.Service.Interfaces.Org
@@ -8,5 +9,7 @@ namespace TaskManager.Service.Interfaces.Org
         TmProcessResult<bool> Login(string userId, string password);
 
         TmProcessResult<User> GetById(string userId);
+
+        TmProcessResult<PagedList<User>> GetByCondition(int pageIndex, int pageSize);
     }
 }

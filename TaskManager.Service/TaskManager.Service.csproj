@@ -56,15 +56,25 @@
     <Compile Include="Factory\ServiceContainer.cs" />
     <Compile Include="Factory\ServiceLocator.cs" />
     <Compile Include="Helper\RepositoryHelper.cs" />
+    <Compile Include="Interfaces\Dev\INodeService.cs" />
     <Compile Include="Interfaces\Org\IUserService.cs" />
+    <Compile Include="Interfaces\Ta\ITaskService.cs" />
     <Compile Include="OperateDependentFactory\DependentContainer.cs" />
     <Compile Include="OperateDependentFactory\IDependentContainer.cs" />
     <Compile Include="OperateDependentFactory\OperateDependentLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceConfig.cs" />
-    <Compile Include="Service\Org\OrgOperator\Operator\LoginOperator.cs" />
-    <Compile Include="Service\Org\OrgOperator\Queryer\UserByIdQueryer.cs" />
+    <Compile Include="Service\Dev\NodeOperator\Creator\NodeCreator.cs" />
+    <Compile Include="Service\Dev\NodeOperator\Queryer\AllNodeQueryer.cs" />
+    <Compile Include="Service\Dev\NodeOperator\Queryer\NodeByConditionQueryer.cs" />
+    <Compile Include="Service\Dev\DevService.cs" />
+    <Compile Include="Service\Org\UserOperator\Operator\LoginOperator.cs" />
+    <Compile Include="Service\Org\UserOperator\Queryer\UserByConditionQueryer.cs" />
+    <Compile Include="Service\Org\UserOperator\Queryer\UserByIdQueryer.cs" />
     <Compile Include="Service\Org\UserService.cs" />
+    <Compile Include="Service\Ta\TaskOperator\Creator\TaskCreator.cs" />
+    <Compile Include="Service\Ta\TaskOperator\Queryer\TaskByConditionQueryer.cs" />
+    <Compile Include="Service\Ta\TaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaskManager.DB\TaskManager.DB.csproj">
@@ -79,10 +89,15 @@
       <Project>{444764c9-e896-45eb-9fd2-e7e8bb6273b5}</Project>
       <Name>TaskManager.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaskManager.Utils\TaskManager.Utils.csproj">
+      <Project>{f3a8cc59-23d6-4c01-8b9a-837cd34718eb}</Project>
+      <Name>TaskManager.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

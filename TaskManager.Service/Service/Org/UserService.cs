@@ -1,8 +1,10 @@
-﻿using TaskManager.LogicEntity;
+﻿using System;
+using TaskManager.LogicEntity;
+using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Org;
 using TaskManager.Service.Interfaces.Org;
-using TaskManager.Service.Service.Org.OrgOperator.Operator;
-using TaskManager.Service.Service.Org.OrgOperator.Queryer;
+using TaskManager.Service.Service.Org.UserOperator.Operator;
+using TaskManager.Service.Service.Org.UserOperator.Queryer;
 
 namespace TaskManager.Service.Service.Org
 {
@@ -33,6 +35,17 @@ namespace TaskManager.Service.Service.Org
                     base.ResloveProcessConfig<UserByIdQueryer>(db),
                     userId);
 
+                return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<PagedList<User>> GetByCondition(int pageIndex, int pageSize)
+        {
+            return base.ExeProcess(db =>
+            {
+                var queryer = new UserByConditionQueryer(
+                    base.ResloveProcessConfig<UserByConditionQueryer>(db),
+                    pageIndex, pageSize);
                 return base.ExeQueryProcess(queryer);
             });
         }

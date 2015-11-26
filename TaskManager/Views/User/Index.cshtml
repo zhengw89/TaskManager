@@ -1,6 +1,39 @@
-﻿@{
+﻿@using TaskManager.Helper.CustomHtmlHelper
+@using TaskManager.LogicEntity;
+@using TaskManager.LogicEntity.Entities;
+@using TaskManager.LogicEntity.Entities.Org;
+@model TmProcessResult<PagedList<User>>
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
+
+@if (Model.HasError)
+{
+    <h3>Error:@Model.Error.Message</h3>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>CreateTime</th>
+        </thead>
+        <tbody>
+            @foreach (var user in @Model.Data)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.CreateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <ul class="pagination">
+        @Html.PageLinks(@Model.Data, x => Url.Action("Index", new { pageIndex = x }))
+    </ul>
+}

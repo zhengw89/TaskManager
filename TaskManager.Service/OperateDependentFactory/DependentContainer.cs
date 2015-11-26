@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using CommonProcess;
 using CommonProcess.DependentProvider;
 using TaskManager.DB;
 using TaskManager.Service.Core;
@@ -16,18 +17,21 @@ namespace TaskManager.Service.OperateDependentFactory
         }
 
         public void Register<TDependentSource>(Func<BaseDependentProvider> factory)
+            where TDependentSource : DataProcess
         {
             Type key = typeof(TDependentSource);
             _factories[key] = factory;
         }
 
         public void Register<TDependentSource>(Func<ITaskManagerDb, TmBaseDependentProvider> factory)
+            where TDependentSource : DataProcess
         {
             Type key = typeof(TDependentSource);
             _factories[key] = factory;
         }
 
         public TmBaseDependentProvider Resolve<TDependentSource>(ITaskManagerDb db)
+            where TDependentSource : DataProcess
         {
             object factory;
 

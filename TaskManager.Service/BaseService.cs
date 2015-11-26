@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonProcess;
 using CommonProcess.DependentProvider;
 using TaskManager.DB;
 using TaskManager.LogicEntity;
@@ -35,8 +36,9 @@ namespace TaskManager.Service
         }
 
         protected ITmProcessConfig ResloveProcessConfig<T>(ITaskManagerDb db)
+            where T : DataProcess
         {
-            return new TmProcessConfig(db)
+            return new TmProcessConfig(db, this._config.RootPath)
             {
                 DependentProvider = this.ResloveOperateDependent<T>(db),
             };
@@ -74,6 +76,7 @@ namespace TaskManager.Service
         #region Private Method
 
         private IDependentProvider ResloveOperateDependent<T>(ITaskManagerDb db)
+            where T : DataProcess
         {
             return OperateDependentLocator.Container.Resolve<T>(db);
         }

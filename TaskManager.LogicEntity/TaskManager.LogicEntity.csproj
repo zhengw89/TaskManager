@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Dev\Node.cs" />
     <Compile Include="Entities\IPagedList.cs" />
     <Compile Include="Entities\Org\User.cs" />
     <Compile Include="Entities\PagedList.cs" />
+    <Compile Include="Entities\Ta\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TmProcessError.cs" />
     <Compile Include="TmProcessResult.cs" />
