@@ -12,5 +12,7 @@ namespace TaskManager.Service.Interfaces.Dev
         TmProcessResult<PagedList<Node>> GetByCondition(int pageIndex, int pageSize);
 
         TmProcessResult<List<Node>> GetAllNode();
+
+        TmProcessResult<bool> CreateNodeHeartBeat(string nodeId);
     }
 }

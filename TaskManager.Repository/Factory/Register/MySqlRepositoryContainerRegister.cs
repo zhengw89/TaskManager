@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TaskManager.Repository.Interfaces.Dev;
+﻿using TaskManager.Repository.Interfaces.Dev;
 using TaskManager.Repository.Interfaces.Org;
 using TaskManager.Repository.Interfaces.Ta;
 using TaskManager.Repository.Repositories.MySql.Dev;
@@ -16,6 +12,7 @@ namespace TaskManager.Repository.Factory.Register
         protected override void RegisterDevRepositories(IRepositoryContainer container)
         {
             container.Register<INodeRepository>(db => new MsNodeRepository(db));
+            container.Register<INodeHeartBeatRepository>(db => new MsNodeHeartBeatRepository(db));
         }
 
         protected override void RegisterOrgRepositories(IRepositoryContainer container)
@@ -26,6 +23,7 @@ namespace TaskManager.Repository.Factory.Register
         protected override void RegisterTaRepositories(IRepositoryContainer container)
         {
             container.Register<ITaskRepository>(db => new MsTaskRepository(db));
+            container.Register<ITaskJobRepository>(db => new MsTaskJobRepository(db));
         }
 
         protected override void RegisterUbRepositories(IRepositoryContainer container)

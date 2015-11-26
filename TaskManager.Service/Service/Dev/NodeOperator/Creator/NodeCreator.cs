@@ -60,7 +60,7 @@ namespace TaskManager.Service.Service.Dev.NodeOperator.Creator
                 base.CacheProcessError("节点端口错误");
                 return false;
             }
-            if (this._nodeRepository.Exists(this._nodeName))
+            if (this._nodeRepository.ExistByName(this._nodeName))
             {
                 base.CacheProcessError("已存在相同节点名");
                 return false;

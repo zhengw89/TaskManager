@@ -12,6 +12,7 @@ namespace TaskManager.Repository.Factory.Register
         protected override void RegisterDevRepositories(IRepositoryContainer container)
         {
             container.Register<INodeRepository>(db => new SsNodeRepository(db));
+            container.Register<INodeHeartBeatRepository>(db => new SsNodeHeartBeatRepository(db));
         }
 
         protected override void RegisterOrgRepositories(IRepositoryContainer container)
@@ -22,6 +23,7 @@ namespace TaskManager.Repository.Factory.Register
         protected override void RegisterTaRepositories(IRepositoryContainer container)
         {
             container.Register<ITaskRepository>(db => new SsTaskRepository(db));
+            container.Register<ITaskJobRepository>(db => new SsTaskJobRepository(db));
         }
 
         protected override void RegisterUbRepositories(IRepositoryContainer container)

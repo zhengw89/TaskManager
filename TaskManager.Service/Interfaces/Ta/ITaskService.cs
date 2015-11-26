@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using TaskManager.LogicEntity;
 using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Ta;
@@ -11,5 +12,9 @@ namespace TaskManager.Service.Interfaces.Ta
             string taskFileName, Stream taskFileStream);
 
         TmProcessResult<PagedList<Task>> GetByCondition(int pageIndex, int pageSize);
+
+        TmProcessResult<List<Task>> GetByNode(string nodeId);
+
+        TmProcessResult<string> StartTaskJob(string nodeId, string taskId);
     }
 }

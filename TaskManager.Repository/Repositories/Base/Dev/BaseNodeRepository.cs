@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using TaskManager.DB;
 using TaskManager.DBEntity.DEV;
 using TaskManager.LogicEntity.Entities;
@@ -28,7 +25,12 @@ namespace TaskManager.Repository.Repositories.Base.Dev
             return l.ToT();
         }
 
-        public bool Exists(string nodeName)
+        public bool ExistById(string nodeId)
+        {
+            return base.BaseQuery.Equal(IsActive, true).Equal("NODE_Id", nodeId).QueryCount() > 0;
+        }
+
+        public bool ExistByName(string nodeName)
         {
             return base.BaseQuery.Equal("NODE_Name", nodeName).Equal(IsActive, true).QueryCount() > 0;
         }

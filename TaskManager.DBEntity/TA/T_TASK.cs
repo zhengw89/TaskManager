@@ -3,7 +3,7 @@
 namespace TaskManager.DBEntity.TA
 {
     [TableName("T_TASK")]
-    [PrimaryKey("", autoIncrement = false)]
+    [PrimaryKey("TA_Id", autoIncrement = false)]
     public class T_TASK : DbBaseEntity
     {
         [Column("TA_Id")]

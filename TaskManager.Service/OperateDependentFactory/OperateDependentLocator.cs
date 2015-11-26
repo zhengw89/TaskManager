@@ -1,7 +1,9 @@
-﻿using TaskManager.Service.Service.Dev.NodeOperator.Creator;
+﻿using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator;
+using TaskManager.Service.Service.Dev.NodeOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
 using TaskManager.Service.Service.Org.UserOperator.Operator;
 using TaskManager.Service.Service.Org.UserOperator.Queryer;
+using TaskManager.Service.Service.Ta.TaskJobOperator.Operator;
 using TaskManager.Service.Service.Ta.TaskOperator.Creator;
 using TaskManager.Service.Service.Ta.TaskOperator.Queryer;
 
@@ -32,6 +34,8 @@ namespace TaskManager.Service.OperateDependentFactory
             container.Register<AllNodeQueryer>(db => new AllNodeQueryerDependent(db));
             container.Register<NodeByConditionQueryer>(db => new NodeByConditionQueryerDependent(db));
             container.Register<NodeCreator>(db => new NodeCreatorDependent(db));
+
+            container.Register<NodeHeartBeatCreator>(db => new NodeHeartBeatCreatorDependent(db));
         }
 
         private void RegistOrg(IDependentContainer container)
@@ -45,6 +49,8 @@ namespace TaskManager.Service.OperateDependentFactory
         {
             container.Register<TaskByConditionQueryer>(db => new TaskByConditionQueryerDependent(db));
             container.Register<TaskCreator>(db => new TaskCreatorDependent(db));
+            container.Register<TaskByNodeQueryer>(db => new TaskByNodeQueryerDependent(db));
+            container.Register<StartTaskJobOperator>(db => new StartTaskJobOperatorDependent(db));
         }
     }
 }

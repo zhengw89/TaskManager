@@ -64,16 +64,19 @@
     <Compile Include="OperateDependentFactory\OperateDependentLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceConfig.cs" />
+    <Compile Include="Service\Dev\NodeHeartBeatOperator\Creator\NodeHeartBeatCreator.cs" />
     <Compile Include="Service\Dev\NodeOperator\Creator\NodeCreator.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\AllNodeQueryer.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\NodeByConditionQueryer.cs" />
-    <Compile Include="Service\Dev\DevService.cs" />
+    <Compile Include="Service\Dev\NodeService.cs" />
     <Compile Include="Service\Org\UserOperator\Operator\LoginOperator.cs" />
     <Compile Include="Service\Org\UserOperator\Queryer\UserByConditionQueryer.cs" />
     <Compile Include="Service\Org\UserOperator\Queryer\UserByIdQueryer.cs" />
     <Compile Include="Service\Org\UserService.cs" />
+    <Compile Include="Service\Ta\TaskJobOperator\Operator\StartTaskJobOperator.cs" />
     <Compile Include="Service\Ta\TaskOperator\Creator\TaskCreator.cs" />
     <Compile Include="Service\Ta\TaskOperator\Queryer\TaskByConditionQueryer.cs" />
+    <Compile Include="Service\Ta\TaskOperator\Queryer\TaskByNodeQueryer.cs" />
     <Compile Include="Service\Ta\TaskService.cs" />
   </ItemGroup>
   <ItemGroup>

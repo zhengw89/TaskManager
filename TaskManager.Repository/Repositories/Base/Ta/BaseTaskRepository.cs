@@ -1,4 +1,5 @@
-﻿using TaskManager.DB;
+﻿using System.Collections.Generic;
+using TaskManager.DB;
 using TaskManager.DBEntity.TA;
 using TaskManager.LogicEntity.Entities;
 using TaskManager.Repository.Converter.Ta;
@@ -24,6 +25,11 @@ namespace TaskManager.Repository.Repositories.Base.Ta
             return l.ToT();
         }
 
+        public bool ExistById(string taskId)
+        {
+            return base.BaseQuery.Equal(IsActive, true).Equal("TA_Id", taskId).QueryCount() > 0;
+        }
+
         public bool Create(Task task)
         {
             return base.Add(task.ToT());
@@ -35,6 +41,18 @@ namespace TaskManager.Repository.Repositories.Base.Ta
                 base.ConvertToPagedList(base.BaseQuery.Equal(IsActive, true)
                     .OrderBy(CreateTime)
                     .QueryByPage(pageIndex, pageSize));
+        }
+
+        public List<Task> GetByNodeId(string nodeId)
+        {
+            return base.ConvertToList(base.BaseQuery.Equal("NODE_Id", nodeId).Equal(IsActive, true).Query());
+        }
+
+        public string GetNodeIdByTaskId(string taskId)
+        {
+            var queryResult = base.BaseQuery.Equal("TA_Id", taskId).Equal(IsActive, true).SingleOrDefault("NODE_Id");
+            if (queryResult == null) return null;
+            return queryResult.NodeId;
         }
     }
 }

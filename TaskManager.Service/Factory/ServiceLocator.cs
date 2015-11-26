@@ -33,7 +33,7 @@ namespace TaskManager.Service.Factory
 
         private void RegisterDevService(IServiceContainer container)
         {
-            container.Register<INodeService>(c => new DevService(c));
+            container.Register<INodeService>(c => new NodeService(c));
         }
 
         private void RegisterOrgService(IServiceContainer container)

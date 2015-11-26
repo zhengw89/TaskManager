@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using TaskManager.LogicEntity;
 using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Ta;
 using TaskManager.Service.Interfaces.Ta;
+using TaskManager.Service.Service.Ta.TaskJobOperator.Operator;
 using TaskManager.Service.Service.Ta.TaskOperator.Creator;
 using TaskManager.Service.Service.Ta.TaskOperator.Queryer;
 
@@ -15,7 +17,7 @@ namespace TaskManager.Service.Service.Ta
         {
         }
 
-        public TmProcessResult<bool> CreateTask(string name, string nodeId, string cron, string className, string methodName, string remark, 
+        public TmProcessResult<bool> CreateTask(string name, string nodeId, string cron, string className, string methodName, string remark,
             string taskFileName, Stream taskFileStream)
         {
             return base.ExeProcess(db =>
@@ -37,6 +39,30 @@ namespace TaskManager.Service.Service.Ta
                     pageIndex, pageSize);
 
                 return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<List<Task>> GetByNode(string nodeId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var queryer = new TaskByNodeQueryer(
+                    base.ResloveProcessConfig<TaskByNodeQueryer>(db),
+                    nodeId);
+
+                return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<string> StartTaskJob(string nodeId, string taskId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var @operator = new StartTaskJobOperator(
+                    base.ResloveProcessConfig<StartTaskJobOperator>(db),
+                    nodeId, taskId);
+
+                return base.ExeOperateProcess(@operator);
             });
         }
     }

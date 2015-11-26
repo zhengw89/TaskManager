@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using TaskManager.LogicEntity;
 using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Dev;
 using TaskManager.Service.Interfaces.Dev;
+using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
 
 namespace TaskManager.Service.Service.Dev
 {
-    internal class DevService : BaseService, INodeService
+    internal class NodeService : BaseService, INodeService
     {
-        public DevService(ServiceConfig config)
+        public NodeService(ServiceConfig config)
             : base(config)
         {
         }
@@ -49,6 +47,18 @@ namespace TaskManager.Service.Service.Dev
                 var queryer = new AllNodeQueryer(base.ResloveProcessConfig<AllNodeQueryer>(db));
 
                 return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<bool> CreateNodeHeartBeat(string nodeId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var creator = new NodeHeartBeatCreator(
+                    base.ResloveProcessConfig<NodeHeartBeatCreator>(db),
+                    nodeId);
+
+                return base.ExeOperateProcess(creator);
             });
         }
     }
