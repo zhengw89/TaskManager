@@ -8,6 +8,7 @@ namespace TaskManager.Controllers.Base
     public abstract class BaseController : Controller
     {
         protected const string JsonContentType = "application/json";
+        protected const string ZipContentType = "application/x-zip-compressed";
 
         protected BaseController()
         {

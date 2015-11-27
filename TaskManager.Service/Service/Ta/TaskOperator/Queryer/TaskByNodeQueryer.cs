@@ -29,7 +29,7 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Queryer
         private readonly INodeRepository _nodeRepository;
         private readonly ITaskRepository _taskRepository;
 
-        public TaskByNodeQueryer(IDataProcessConfig config, string nodeId)
+        public TaskByNodeQueryer(ITmProcessConfig config, string nodeId)
             : base(config)
         {
             this._nodeId = nodeId;

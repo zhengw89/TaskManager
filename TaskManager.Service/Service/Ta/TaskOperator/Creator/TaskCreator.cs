@@ -4,6 +4,7 @@ using TaskManager.DB;
 using TaskManager.LogicEntity.Entities.Ta;
 using TaskManager.Repository.Interfaces.Ta;
 using TaskManager.Service.Core;
+using TaskManager.Service.Helper;
 using TaskManager.Utils;
 
 namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
@@ -101,8 +102,8 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
                 return false;
             }
 
-            var taskFilePath = FileHelper.GetTaskFilePath(base.RootPath, taskId);
-            if (!FileHelper.SaveFile(this._taskFileStream, taskFilePath))
+            var taskFilePath = SiteFileHelper.GetTaskFilePath(base.RootPath, taskId);
+            if (!DirectoryAndFileHelper.SaveFile(this._taskFileStream, taskFilePath))
             {
                 base.CacheProcessError("任务运行文件保存失败，创建任务失败");
                 return false;

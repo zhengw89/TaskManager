@@ -51,6 +51,7 @@ namespace TaskManager.Service.OperateDependentFactory
             container.Register<TaskCreator>(db => new TaskCreatorDependent(db));
             container.Register<TaskByNodeQueryer>(db => new TaskByNodeQueryerDependent(db));
             container.Register<StartTaskJobOperator>(db => new StartTaskJobOperatorDependent(db));
+            container.Register<TaskFileQueryer>(db => new TaskFileQueryerDependent(db));
         }
     }
 }

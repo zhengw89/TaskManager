@@ -26,7 +26,7 @@ namespace TaskManager.Service.Service.Org.UserOperator.Queryer
 
         private readonly IUserRepository _userRepository;
 
-        public UserByConditionQueryer(IDataProcessConfig config, int pageIndex, int pageSize)
+        public UserByConditionQueryer(ITmProcessConfig config, int pageIndex, int pageSize)
             : base(config)
         {
             this._pageIndex = pageIndex;

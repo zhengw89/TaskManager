@@ -1,23 +1,39 @@
 ﻿using System;
 using System.Web.Mvc;
+using TaskManager.Helper.CustomResult;
 using TaskManager.Service.Interfaces.Ta;
 
 namespace TaskManager.Controllers
 {
     public partial class ApiController
     {
-        [HttpPost]
+        [HttpGet]
         public ActionResult GetTasks(string nodeId)
         {
             var service = base.ResolveService<ITaskService>();
-            return Json(service.GetByNode(nodeId));
+            return JsonResult(service.GetByNode(nodeId));
+        }
+
+        [HttpGet]
+        public ActionResult GetTaskFile(string taskId)
+        {
+            var service = base.ResolveService<ITaskService>();
+            var result = service.GetTaskFile(taskId);
+            if (result.HasError)
+            {
+                return new Http404Result();
+            }
+            else
+            {
+                return File(result.Data, ZipContentType);
+            }
         }
 
         [HttpPost]
         public ActionResult ExecuteTask(string nodeId, string taskId)
         {
             var service = base.ResolveService<ITaskService>();
-            return Json(service.StartTaskJob(nodeId, taskId));
+            return JsonResult(service.StartTaskJob(nodeId, taskId));
         }
 
         [HttpPost]

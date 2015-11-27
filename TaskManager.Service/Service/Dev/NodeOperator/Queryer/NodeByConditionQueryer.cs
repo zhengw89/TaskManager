@@ -26,7 +26,7 @@ namespace TaskManager.Service.Service.Dev.NodeOperator.Queryer
 
         private readonly INodeRepository _nodeRepository;
 
-        public NodeByConditionQueryer(IDataProcessConfig config, int pageIndex, int pageSize)
+        public NodeByConditionQueryer(ITmProcessConfig config, int pageIndex, int pageSize)
             : base(config)
         {
             this._pageIndex = pageIndex;

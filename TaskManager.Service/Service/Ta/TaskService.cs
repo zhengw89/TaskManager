@@ -65,5 +65,17 @@ namespace TaskManager.Service.Service.Ta
                 return base.ExeOperateProcess(@operator);
             });
         }
+
+        public TmProcessResult<Stream> GetTaskFile(string taskId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var queryer = new TaskFileQueryer(
+                    base.ResloveProcessConfig<TaskFileQueryer>(db),
+                    taskId);
+
+                return base.ExeQueryProcess(queryer);
+            });
+        }
     }
 }

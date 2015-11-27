@@ -10,7 +10,7 @@ namespace TaskManager.Controllers
         public ActionResult HeartBeat(string nodeId)
         {
             var service = base.ResolveService<INodeService>();
-            return Json(service.CreateNodeHeartBeat(nodeId));
+            return JsonResult(service.CreateNodeHeartBeat(nodeId));
         }
     }
 }

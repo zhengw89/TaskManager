@@ -16,5 +16,7 @@ namespace TaskManager.Service.Interfaces.Ta
         TmProcessResult<List<Task>> GetByNode(string nodeId);
 
         TmProcessResult<string> StartTaskJob(string nodeId, string taskId);
+
+        TmProcessResult<Stream> GetTaskFile(string taskId);
     }
 }

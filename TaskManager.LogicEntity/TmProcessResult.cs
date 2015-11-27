@@ -1,9 +1,12 @@
-﻿namespace TaskManager.LogicEntity
+﻿using Newtonsoft.Json;
+
+namespace TaskManager.LogicEntity
 {
     public class TmProcessResult<T>
     {
         public TmProcessError Error { get; set; }
         public T Data { get; set; }
+        [JsonIgnore]
         public bool HasError { get { return this.Error != null; } }
 
         public TmProcessResult() { }

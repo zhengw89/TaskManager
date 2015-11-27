@@ -9,7 +9,7 @@ namespace TaskManager.Helper.ModelBinder
         {
             //将上下文对象中的字符串取出来
             string data = RequestHelper.GetRequestContent(controllerContext.HttpContext);
-            return JsonNet.DeserializeToString<T>(data);
+            return JsonNet.DeserializeToEntity<T>(data);
         }
     }
 }

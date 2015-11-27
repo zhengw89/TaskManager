@@ -15,6 +15,7 @@ namespace TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator
 
         protected override void RegistDefault()
         {
+            base.RegistRepository<INodeRepository>();
             base.RegistRepository<INodeHeartBeatRepository>();
         }
     }
@@ -23,6 +24,7 @@ namespace TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator
     {
         private readonly string _nodeId;
 
+        private readonly INodeRepository _nodeRepository;
         private readonly INodeHeartBeatRepository _heartBeatRepository;
 
         public NodeHeartBeatCreator(ITmProcessConfig config, string nodeId)
@@ -30,6 +32,7 @@ namespace TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator
         {
             this._nodeId = nodeId;
 
+            this._nodeRepository = base.ResolveDependency<INodeRepository>();
             this._heartBeatRepository = base.ResolveDependency<INodeHeartBeatRepository>();
         }
 
@@ -38,6 +41,11 @@ namespace TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator
             if (string.IsNullOrEmpty(this._nodeId))
             {
                 base.CacheProcessError("节点ID为空");
+                return false;
+            }
+            if (!this._nodeRepository.ExistById(this._nodeId))
+            {
+                base.CacheProcessError("未知节点");
                 return false;
             }
 

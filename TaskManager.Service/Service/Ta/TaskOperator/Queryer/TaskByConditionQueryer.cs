@@ -26,7 +26,7 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Queryer
 
         private readonly ITaskRepository _taskRepository;
 
-        public TaskByConditionQueryer(IDataProcessConfig config, int pageIndex, int pageSize)
+        public TaskByConditionQueryer(ITmProcessConfig config, int pageIndex, int pageSize)
             : base(config)
         {
             this._pageIndex = pageIndex;

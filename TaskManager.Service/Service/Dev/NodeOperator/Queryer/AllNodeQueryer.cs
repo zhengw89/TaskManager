@@ -24,7 +24,7 @@ namespace TaskManager.Service.Service.Dev.NodeOperator.Queryer
     {
         private readonly INodeRepository _nodeRepository;
 
-        public AllNodeQueryer(IDataProcessConfig config)
+        public AllNodeQueryer(ITmProcessConfig config)
             : base(config)
         {
             this._nodeRepository = base.ResolveDependency<INodeRepository>();
