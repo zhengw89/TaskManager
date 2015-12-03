@@ -51,6 +51,25 @@ namespace TaskManager.ApiSdk.Sdk
             }
         }
 
+        public TmSdkResult<string> StartTask(string nodeId, string taskId)
+        {
+            var request = new RestRequest("Api/ExecuteTask", Method.POST);
+            request.AddParameter("nodeId", nodeId);
+            request.AddParameter("taskId", taskId);
+
+            return this.ExecuteRequest<string>(request);
+        }
+
+        public TmSdkResult<bool> CompleteTask(string jobId, bool success, string result)
+        {
+            var request = new RestRequest("Api/ExecuteTaskComplete", Method.POST);
+            request.AddParameter("jobId", jobId);
+            request.AddParameter("success", success);
+            request.AddParameter("result", result);
+
+            return this.ExecuteRequest<bool>(request);
+        }
+
         private TmSdkResult<T> ExecuteRequest<T>(RestRequest request)
         {
             var client = new RestClient(this._config.Host);

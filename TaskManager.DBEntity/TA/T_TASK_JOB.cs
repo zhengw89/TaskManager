@@ -17,5 +17,7 @@ namespace TaskManager.DBEntity.TA
         public DateTime ExecuteTime { get; set; }
         [Column("TAJ_Status")]
         public int Status { get; set; }
+        [Column("TAJ_Result")]
+        public string ResultMessage { get; set; }
     }
 }

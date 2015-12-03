@@ -17,14 +17,14 @@ namespace TaskManager.Service.Service.Ta
         {
         }
 
-        public TmProcessResult<bool> CreateTask(string name, string nodeId, string cron, string className, string methodName, string remark,
+        public TmProcessResult<bool> CreateTask(string name, string nodeId, string cron, string dllName, string className, string remark,
             string taskFileName, Stream taskFileStream)
         {
             return base.ExeProcess(db =>
             {
                 var creator = new TaskCreator(
                     base.ResloveProcessConfig<TaskCreator>(db),
-                    name, nodeId, cron, className, methodName, remark, taskFileStream);
+                    name, nodeId, cron, dllName, className, remark, taskFileStream);
 
                 return base.ExeOperateProcess(creator);
             });
@@ -61,6 +61,18 @@ namespace TaskManager.Service.Service.Ta
                 var @operator = new StartTaskJobOperator(
                     base.ResloveProcessConfig<StartTaskJobOperator>(db),
                     nodeId, taskId);
+
+                return base.ExeOperateProcess(@operator);
+            });
+        }
+
+        public TmProcessResult<bool> CompleteTaskJob(string jobId, bool success, string result)
+        {
+            return base.ExeProcess(db =>
+            {
+                var @operator = new CompleteTaskJobOperator(
+                    base.ResloveProcessConfig<CompleteTaskJobOperator>(db),
+                    jobId, success, result);
 
                 return base.ExeOperateProcess(@operator);
             });

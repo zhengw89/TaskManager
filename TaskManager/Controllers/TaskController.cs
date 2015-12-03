@@ -39,7 +39,7 @@ namespace TaskManager.Controllers
             {
                 var model = new CreateTaskModel()
                 {
-                    Nodes = result.Data.Select(a => new SelectListItem()
+                    AllNodes = result.Data.Select(a => new SelectListItem()
                     {
                         Text = a.Name,
                         Value = a.Id
@@ -61,7 +61,7 @@ namespace TaskManager.Controllers
             if (ModelState.IsValid)
             {
                 var service = base.ResolveService<ITaskService>();
-                var result = service.CreateTask(model.Name, model.NodeId, model.Cron, model.ClassName, model.MethodName,
+                var result = service.CreateTask(model.Name, model.NodeId, model.Cron, model.DllName, model.ClassName,
                     model.Remark, model.File.FileName, model.File.InputStream);
                 if (result.HasError)
                 {
@@ -71,6 +71,22 @@ namespace TaskManager.Controllers
                 {
                     return RedirectToAction("Index");
                 }
+            }
+
+            var nodeService = base.ResolveService<INodeService>();
+            var allNodeResult = nodeService.GetAllNode();
+
+            if (allNodeResult.HasError)
+            {
+                ViewBag.Error = allNodeResult.Error.Message;
+            }
+            else
+            {
+                model.AllNodes = allNodeResult.Data.Select(a => new SelectListItem()
+                {
+                    Text = a.Name,
+                    Value = a.Id
+                }).ToList();
             }
 
             return base.ReturnView("Create", model);

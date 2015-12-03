@@ -11,5 +11,9 @@ namespace TaskManager.ApiSdk.Sdk
         TmSdkResult<List<Task>> GetTasks(string nodeId);
 
         TmSdkResult<Stream> DownloadTaskFile(string taskId);
+
+        TmSdkResult<string> StartTask(string nodeId, string taskId);
+
+        TmSdkResult<bool> CompleteTask(string jobId, bool success, string result);
     }
 }

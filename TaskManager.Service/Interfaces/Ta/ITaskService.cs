@@ -8,7 +8,7 @@ namespace TaskManager.Service.Interfaces.Ta
 {
     public interface ITaskService
     {
-        TmProcessResult<bool> CreateTask(string name, string nodeId, string cron, string className, string methodName, string remark,
+        TmProcessResult<bool> CreateTask(string name, string nodeId, string cron, string dllName, string className, string remark,
             string taskFileName, Stream taskFileStream);
 
         TmProcessResult<PagedList<Task>> GetByCondition(int pageIndex, int pageSize);
@@ -16,6 +16,8 @@ namespace TaskManager.Service.Interfaces.Ta
         TmProcessResult<List<Task>> GetByNode(string nodeId);
 
         TmProcessResult<string> StartTaskJob(string nodeId, string taskId);
+
+        TmProcessResult<bool> CompleteTaskJob(string jobId, bool success, string result);
 
         TmProcessResult<Stream> GetTaskFile(string taskId);
     }

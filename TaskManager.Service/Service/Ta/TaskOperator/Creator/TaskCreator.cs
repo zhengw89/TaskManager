@@ -24,20 +24,20 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
 
     internal class TaskCreator : TmOperateProcess
     {
-        private readonly string _name, _nodeId, _cron, _className, _methodName, _remark;
+        private readonly string _name, _nodeId, _cron, _dllName, _className, _remark;
         private readonly Stream _taskFileStream;
 
         private readonly ITaskRepository _taskRepository;
 
-        public TaskCreator(ITmProcessConfig config, string name, string nodeId, string cron, string className, string methodName, string remark,
+        public TaskCreator(ITmProcessConfig config, string name, string nodeId, string cron, string dllName, string className, string remark,
             Stream taskFileStream)
             : base(config)
         {
             this._name = name;
             this._nodeId = nodeId;
             this._cron = cron;
+            this._dllName = dllName;
             this._className = className;
-            this._methodName = methodName;
             this._remark = remark;
             this._taskFileStream = taskFileStream;
 
@@ -61,14 +61,14 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
                 base.CacheProcessError("CRON表达式不可为空");
                 return false;
             }
+            if (string.IsNullOrEmpty(this._dllName))
+            {
+                base.CacheProcessError("DLL名称不可为空");
+                return false;
+            }
             if (string.IsNullOrEmpty(this._className))
             {
                 base.CacheProcessError("类名不可为空");
-                return false;
-            }
-            if (string.IsNullOrEmpty(this._methodName))
-            {
-                base.CacheProcessError("方法名不可为空");
                 return false;
             }
             if (this._taskFileStream == null)
@@ -94,8 +94,8 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
                 NodeId = this._nodeId,
                 UpdateTime = DateTime.Now,
                 ClassName = this._className,
-                MethodName = this._methodName,
-                Remark = this._remark
+                Remark = this._remark,
+                DllName = this._dllName
             }))
             {
                 base.CacheProcessError("创建任务失败");

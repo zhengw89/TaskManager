@@ -39,7 +39,8 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult ExecuteTaskComplete(string jobId, bool success, string result)
         {
-            throw new NotImplementedException();
+            var service = base.ResolveService<ITaskService>();
+            return JsonResult(service.CompleteTaskJob(jobId, success, result));
         }
     }
 }

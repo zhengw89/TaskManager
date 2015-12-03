@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace TaskManager.AgentService.Helper
+namespace TaskManager.Node.Helper
 {
     internal class ServiceFileHelper
     {
-        public static string GetTaskFilePath(string rootPath, string taskId)
+        public static string GetTaskPackageFilePath(string rootPath, string taskId)
         {
             if (string.IsNullOrEmpty(rootPath) || string.IsNullOrEmpty(taskId))
             {
@@ -20,7 +20,7 @@ namespace TaskManager.AgentService.Helper
             {
                 throw new ArgumentNullException();
             }
-            return string.Format("{0}\\{1}\\", rootPath, taskId);
+            return string.Format("{0}{1}\\", rootPath, taskId);
         }
     }
 }

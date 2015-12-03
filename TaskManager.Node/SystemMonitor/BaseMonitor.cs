@@ -3,7 +3,7 @@ using System.Threading;
 using NLog;
 using TaskManager.ApiSdk.Sdk;
 
-namespace TaskManager.AgentService.SystemMonitor
+namespace TaskManager.Node.SystemMonitor
 {
     internal abstract class BaseMonitor : IMonitor
     {

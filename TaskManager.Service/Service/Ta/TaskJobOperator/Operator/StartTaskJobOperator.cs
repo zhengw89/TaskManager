@@ -84,7 +84,7 @@ namespace TaskManager.Service.Service.Ta.TaskJobOperator.Operator
             {
                 CreateTime = DateTime.Now,
                 ExecuteTime = DateTime.Now,
-                Id = Guid.NewGuid().ToString(),
+                Id = this._jobId,
                 IsActive = true,
                 NodeId = this._nodeId,
                 Status = TaskJobStatus.Executing,

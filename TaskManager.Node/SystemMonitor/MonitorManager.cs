@@ -3,9 +3,9 @@ using System.Linq;
 using TaskManager.ApiSdk.Factory;
 using TaskManager.ApiSdk.Sdk;
 
-namespace TaskManager.AgentService.SystemMonitor
+namespace TaskManager.Node.SystemMonitor
 {
-    internal class MonitorManager
+    public class MonitorManager
     {
         private const int HeartBeatMonitorInterval = 10 * 1000;
 

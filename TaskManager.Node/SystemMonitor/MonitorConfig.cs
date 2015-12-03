@@ -1,6 +1,6 @@
 ﻿using TaskManager.ApiSdk.Sdk;
 
-namespace TaskManager.AgentService.SystemMonitor
+namespace TaskManager.Node.SystemMonitor
 {
     public class MonitorConfig
     {

@@ -10,5 +10,6 @@ namespace TaskManager.LogicEntity.Entities.Ta
         public string NodeId { get; set; }
         public DateTime ExecuteTime { get; set; }
         public TaskJobStatus Status { get; set; }
+        public string ResultMessage { get; set; }
     }
 }

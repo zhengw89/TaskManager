@@ -24,11 +24,9 @@
         </div>
         
         <div class="form-group">
-
             @Html.LabelFor(m => m.NodeId)
             @Html.ValidationMessageFor(m => m.NodeId)
-            @*@Html.TextBoxFor(m => m.NodeId)*@
-            @Html.DropDownListFor(m => m.NodeId, Model.Nodes)
+            @Html.DropDownListFor(x => x.NodeId, Model.AllNodes)
         </div>
         
         <div class="form-group">
@@ -38,15 +36,15 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(m => m.ClassName)
-            @Html.ValidationMessageFor(m => m.ClassName)
-            @Html.TextBoxFor(m => m.ClassName)
+            @Html.LabelFor(m => m.DllName)
+            @Html.ValidationMessageFor(m => m.DllName)
+            @Html.TextBoxFor(m => m.DllName)
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(m => m.MethodName)
-            @Html.ValidationMessageFor(m => m.MethodName)
-            @Html.TextBoxFor(m => m.MethodName)
+            @Html.LabelFor(m => m.ClassName)
+            @Html.ValidationMessageFor(m => m.ClassName)
+            @Html.TextBoxFor(m => m.ClassName)
         </div>
         
         <div class="form-group">

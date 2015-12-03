@@ -1,4 +1,4 @@
-﻿namespace TaskManager.AgentService.SystemMonitor
+﻿namespace TaskManager.Node.SystemMonitor
 {
     internal class NodeHeartBeatMonitor : BaseMonitor
     {

@@ -14,10 +14,10 @@ namespace TaskManager.DBEntity.TA
         public string NodeId { get; set; }
         [Column("TA_CRON")]
         public string Cron { get; set; }
+        [Column("TA_DllName")]
+        public string DllName { get; set; }
         [Column("TA_FullClassName")]
         public string ClassName { get; set; }
-        [Column("TA_MethodName")]
-        public string MethodName { get; set; }
         [Column("TA_Remark")]
         public string Remark { get; set; }
     }
