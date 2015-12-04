@@ -72,7 +72,7 @@ namespace TaskManager.Service.Service.Ta.TaskJobOperator.Operator
             var jobStatus = TaskJobStatus.Fail;
             if (this._success) jobStatus = TaskJobStatus.Success;
 
-            if (!this._taskJobRepository.Update(this._jobId, jobStatus, this._resutlMessage, DateTime.Now))
+            if (!this._taskJobRepository.Update(this._jobId, jobStatus, DateTime.Now, this._resutlMessage, DateTime.Now))
             {
                 base.CacheProcessError("记录完成失败");
                 return false;

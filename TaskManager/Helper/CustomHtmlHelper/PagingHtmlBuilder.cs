@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace SMS.Helper.CustomHtmlHelper
+namespace TaskManager.Helper.CustomHtmlHelper
 {
     public class PagingHtmlBuilder
     {

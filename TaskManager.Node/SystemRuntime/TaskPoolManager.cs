@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NLog;
@@ -20,6 +19,7 @@ namespace TaskManager.Node.SystemRuntime
     {
         private readonly Logger _logger;
 
+        private string _sdkHost;
         private string _nodeId;
         private string _rootPath;
         private ITmSdk _sdk;
@@ -67,6 +67,7 @@ namespace TaskManager.Node.SystemRuntime
         {
             lock (LockObj)
             {
+                this._sdkHost = _sdkHost;
                 this._nodeId = nodeId;
                 this._rootPath = rootPath;
                 this._sdk = SdkFactory.CreateSdk(new SdkConfig(host));

@@ -5,6 +5,7 @@ using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Ta;
 using TaskManager.Service.Interfaces.Ta;
 using TaskManager.Service.Service.Ta.TaskJobOperator.Operator;
+using TaskManager.Service.Service.Ta.TaskJobOperator.Queryer;
 using TaskManager.Service.Service.Ta.TaskOperator.Creator;
 using TaskManager.Service.Service.Ta.TaskOperator.Queryer;
 
@@ -86,6 +87,22 @@ namespace TaskManager.Service.Service.Ta
                     base.ResloveProcessConfig<TaskFileQueryer>(db),
                     taskId);
 
+                return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<PagedList<TaskJob>> GetTaskJobByCondition(int pageIndex, int pageSize)
+        {
+            return this.GetTaskJobByCondition(null, pageIndex, pageSize);
+        }
+
+        public TmProcessResult<PagedList<TaskJob>> GetTaskJobByCondition(string taskId, int pageIndex, int pageSize)
+        {
+            return base.ExeProcess(db =>
+            {
+                var queryer = new TaskJobByConditionQueryer(
+                    base.ResloveProcessConfig<TaskJobByConditionQueryer>(db),
+                    taskId, pageIndex, pageSize);
                 return base.ExeQueryProcess(queryer);
             });
         }

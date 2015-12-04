@@ -20,5 +20,9 @@ namespace TaskManager.Service.Interfaces.Ta
         TmProcessResult<bool> CompleteTaskJob(string jobId, bool success, string result);
 
         TmProcessResult<Stream> GetTaskFile(string taskId);
+
+        TmProcessResult<PagedList<TaskJob>> GetTaskJobByCondition(int pageIndex, int pageSize);
+
+        TmProcessResult<PagedList<TaskJob>> GetTaskJobByCondition(string taskId, int pageIndex, int pageSize);
     }
 }

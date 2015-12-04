@@ -19,22 +19,6 @@ namespace TaskManager.Node.SystemRuntime
             this._logger = LogManager.GetLogger("TaskLogger");
         }
 
-        private void BefureRun()
-        {
-            var result = this._sdk.StartTask(this._task.NodeId, this._task.Id);
-
-        }
-
-        private void AfterRun()
-        {
-
-        }
-
-        private void OnException()
-        {
-
-        }
-
         public void Execute(IJobExecutionContext context)
         {
             try
@@ -60,8 +44,12 @@ namespace TaskManager.Node.SystemRuntime
 
                 this._jobId = startTaskResult.Data;
 
+                this._logger.Info("start start, taskId:{0};jobId:{1}", taskId, this._jobId);
+
                 string resultMessage = null;
                 var taskResult = taskInfo.ExeTask.Run(out resultMessage);
+
+                this._logger.Info("task completed, taskId:{0};jobId:{1}", taskId, this._jobId);
 
                 var endTaskResult = this._sdk.CompleteTask(this._jobId, taskResult, resultMessage);
                 if (endTaskResult.HasError)

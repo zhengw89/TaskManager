@@ -4,6 +4,7 @@ using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
 using TaskManager.Service.Service.Org.UserOperator.Operator;
 using TaskManager.Service.Service.Org.UserOperator.Queryer;
 using TaskManager.Service.Service.Ta.TaskJobOperator.Operator;
+using TaskManager.Service.Service.Ta.TaskJobOperator.Queryer;
 using TaskManager.Service.Service.Ta.TaskOperator.Creator;
 using TaskManager.Service.Service.Ta.TaskOperator.Queryer;
 
@@ -53,6 +54,7 @@ namespace TaskManager.Service.OperateDependentFactory
             container.Register<StartTaskJobOperator>(db => new StartTaskJobOperatorDependent(db));
             container.Register<TaskFileQueryer>(db => new TaskFileQueryerDependent(db));
             container.Register<CompleteTaskJobOperator>(db => new CompleteTaskJobOperatorDependent(db));
+            container.Register<TaskJobByConditionQueryer>(db => new TaskJobByConditionQueryerDependent(db));
         }
     }
 }

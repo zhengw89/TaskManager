@@ -73,6 +73,12 @@ namespace TaskManager
                 "TaskCreate",
                 new { controller = "Task", action = "Create" }
             );
+
+            routes.MapRoute(
+                "TaskJobs",
+                "TaskJobs/{pageIndex}",
+                new { controller = "TaskJob", action = "Index", pageIndex = UrlParameter.Optional }
+            );
         }
 
         #endregion

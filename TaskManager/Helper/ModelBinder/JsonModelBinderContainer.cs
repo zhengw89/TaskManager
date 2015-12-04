@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using TaskManager.Helper.ModelBinder;
 
-namespace SMS.Helper.ModelBinder
+namespace TaskManager.Helper.ModelBinder
 {
     public class JsonModelBinderContainer
     {

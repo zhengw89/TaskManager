@@ -1,6 +1,7 @@
 ﻿using System;
 using TaskManager.DB;
 using TaskManager.DBEntity.TA;
+using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Ta;
 using TaskManager.LogicEntity.Enums.Ta;
 using TaskManager.Repository.Converter.Ta;
@@ -35,9 +36,9 @@ namespace TaskManager.Repository.Repositories.Base.Ta
             return base.Add(taskJob.ToT());
         }
 
-        public bool Update(string jobId, TaskJobStatus jobStatus, string resultMessage, DateTime updateTime)
+        public bool Update(string jobId, TaskJobStatus jobStatus, DateTime jobEndTime, string resultMessage, DateTime updateTime)
         {
-            var sql = new Sql("SET TAJ_Status = @0, TAJ_Result = @1, UpdateTime = @2", (int)jobStatus, resultMessage,
+            var sql = new Sql("SET TAJ_Status = @0, TAJ_EndTime = @1, TAJ_Result = @2, UpdateTime = @3", (int)jobStatus, jobEndTime, resultMessage,
                 updateTime);
             sql.Where("TAJ_Id = @0 AND IsActive = 1", jobId);
             return base.Update(sql);
@@ -51,6 +52,17 @@ namespace TaskManager.Repository.Repositories.Base.Ta
         public TaskJobStatus GetJobStatusById(string jobId)
         {
             return (TaskJobStatus)base.BaseQuery.Equal("TAJ_Id", jobId).Equal(IsActive, true).SingleOrDefault().Status;
+        }
+
+        public PagedList<TaskJob> GetByCondition(string taskId, int pageIndex, int pageSize)
+        {
+            var bq = base.BaseQuery.Equal(IsActive, true);
+            if (!string.IsNullOrEmpty(taskId))
+            {
+                bq.Equal("TA_Id", taskId);
+            }
+            bq.OrderBy("TAJ_ExecuteTime");
+            return base.ConvertToPagedList(bq.QueryByPage(pageIndex, pageSize));
         }
     }
 }

@@ -116,6 +116,10 @@
       <Project>{0abcf9fa-905a-447b-acab-a1437095a0d9}</Project>
       <Name>TaskManager.LogicEntity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaskManager.Node\TaskManager.Node.csproj">
+      <Project>{6f567fc6-556f-4245-9704-acf9cde268f6}</Project>
+      <Name>TaskManager.Node</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManager.Utils\TaskManager.Utils.csproj">
       <Project>{f3a8cc59-23d6-4c01-8b9a-837cd34718eb}</Project>
       <Name>TaskManager.Utils</Name>

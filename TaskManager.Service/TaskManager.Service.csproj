@@ -76,6 +76,7 @@
     <Compile Include="Service\Org\UserService.cs" />
     <Compile Include="Service\Ta\TaskJobOperator\Operator\CompleteTaskJobOperator.cs" />
     <Compile Include="Service\Ta\TaskJobOperator\Operator\StartTaskJobOperator.cs" />
+    <Compile Include="Service\Ta\TaskJobOperator\Queryer\TaskJobByConditionQueryer.cs" />
     <Compile Include="Service\Ta\TaskOperator\Creator\TaskCreator.cs" />
     <Compile Include="Service\Ta\TaskOperator\Queryer\TaskByConditionQueryer.cs" />
     <Compile Include="Service\Ta\TaskOperator\Queryer\TaskByNodeQueryer.cs" />

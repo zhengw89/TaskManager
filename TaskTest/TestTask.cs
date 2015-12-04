@@ -17,7 +17,6 @@ namespace TaskTest
                 using (var sw = new StreamWriter(fs, Encoding.UTF8))
                 {
                     sw.WriteLine(DateTime.Now.ToString());
-
                 }
             }
 
