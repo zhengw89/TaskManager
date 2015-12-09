@@ -3,6 +3,7 @@ using TaskManager.LogicEntity;
 using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Org;
 using TaskManager.Service.Interfaces.Org;
+using TaskManager.Service.Service.Org.UserOperator.Creator;
 using TaskManager.Service.Service.Org.UserOperator.Operator;
 using TaskManager.Service.Service.Org.UserOperator.Queryer;
 
@@ -47,6 +48,18 @@ namespace TaskManager.Service.Service.Org
                     base.ResloveProcessConfig<UserByConditionQueryer>(db),
                     pageIndex, pageSize);
                 return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<bool> CreateUser(string userId, string userName, string password)
+        {
+            return base.ExeProcess(db =>
+            {
+                var creator = new UserCreator(
+                    base.ResloveProcessConfig<UserCreator>(db),
+                    userId, userName, password);
+
+                return base.ExeOperateProcess(creator);
             });
         }
     }

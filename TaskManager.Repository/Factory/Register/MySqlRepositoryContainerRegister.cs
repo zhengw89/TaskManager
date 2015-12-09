@@ -1,9 +1,11 @@
 ﻿using TaskManager.Repository.Interfaces.Dev;
 using TaskManager.Repository.Interfaces.Org;
 using TaskManager.Repository.Interfaces.Ta;
+using TaskManager.Repository.Interfaces.Ub;
 using TaskManager.Repository.Repositories.MySql.Dev;
 using TaskManager.Repository.Repositories.MySql.Org;
 using TaskManager.Repository.Repositories.MySql.Ta;
+using TaskManager.Repository.Repositories.MySql.Ub;
 
 namespace TaskManager.Repository.Factory.Register
 {
@@ -28,6 +30,7 @@ namespace TaskManager.Repository.Factory.Register
 
         protected override void RegisterUbRepositories(IRepositoryContainer container)
         {
+            container.Register<IUserLogRepository>(db => new MsUserLogRepository(db));
         }
     }
 }

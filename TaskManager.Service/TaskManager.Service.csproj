@@ -70,6 +70,7 @@
     <Compile Include="Service\Dev\NodeOperator\Queryer\AllNodeQueryer.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\NodeByConditionQueryer.cs" />
     <Compile Include="Service\Dev\NodeService.cs" />
+    <Compile Include="Service\Org\UserOperator\Creator\UserCreator.cs" />
     <Compile Include="Service\Org\UserOperator\Operator\LoginOperator.cs" />
     <Compile Include="Service\Org\UserOperator\Queryer\UserByConditionQueryer.cs" />
     <Compile Include="Service\Org\UserOperator\Queryer\UserByIdQueryer.cs" />

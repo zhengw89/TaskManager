@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using TaskManager.DB;
 using TaskManager.LogicEntity.Entities.Ta;
 using TaskManager.Repository.Interfaces.Ta;
@@ -84,6 +86,17 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
         {
             var taskId = Guid.NewGuid().ToString();
 
+            var sb = new StringBuilder();
+            using (var md5 = MD5.Create())
+            {
+                md5.ComputeHash(this._taskFileStream);
+
+                foreach (byte b in md5.Hash)
+                {
+                    sb.Append(string.Format("{0:X2}", b));
+                }
+            }
+
             if (!this._taskRepository.Create(new Task()
             {
                 CreateTime = DateTime.Now,
@@ -95,7 +108,8 @@ namespace TaskManager.Service.Service.Ta.TaskOperator.Creator
                 UpdateTime = DateTime.Now,
                 ClassName = this._className,
                 Remark = this._remark,
-                DllName = this._dllName
+                DllName = this._dllName,
+                FileSignature = sb.ToString()
             }))
             {
                 base.CacheProcessError("创建任务失败");

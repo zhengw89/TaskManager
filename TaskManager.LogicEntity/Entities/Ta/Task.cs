@@ -8,6 +8,7 @@
         public string Cron { get; set; }
         public string DllName { get; set; }
         public string ClassName { get; set; }
+        public string FileSignature { get; set; }
         public string Remark { get; set; }
     }
 }

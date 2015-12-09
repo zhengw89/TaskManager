@@ -11,5 +11,7 @@ namespace TaskManager.Service.Interfaces.Org
         TmProcessResult<User> GetById(string userId);
 
         TmProcessResult<PagedList<User>> GetByCondition(int pageIndex, int pageSize);
+
+        TmProcessResult<bool> CreateUser(string userId, string userName, string password);
     }
 }

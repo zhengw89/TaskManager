@@ -18,6 +18,8 @@ namespace TaskManager.DBEntity.TA
         public string DllName { get; set; }
         [Column("TA_FullClassName")]
         public string ClassName { get; set; }
+        [Column("TA_FileSignature")]
+        public string FileSignature { get; set; }
         [Column("TA_Remark")]
         public string Remark { get; set; }
     }

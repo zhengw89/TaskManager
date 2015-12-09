@@ -38,7 +38,7 @@ namespace TaskManager.Service
         protected ITmProcessConfig ResloveProcessConfig<T>(ITaskManagerDb db)
             where T : DataProcess
         {
-            return new TmProcessConfig(db, this._config.RootPath)
+            return new TmProcessConfig(db, this._config.RootPath, this._config.UserId)
             {
                 DependentProvider = this.ResloveOperateDependent<T>(db),
             };

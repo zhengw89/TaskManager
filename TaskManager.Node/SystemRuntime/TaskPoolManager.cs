@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using NLog;
 using Quartz;
@@ -140,6 +142,11 @@ namespace TaskManager.Node.SystemRuntime
                         if (!this._taskInfos.ContainsKey(task.Id))
                         {
                             var taskDllFilePath = PrepareTaskFile(task);
+                            if (string.IsNullOrEmpty(taskDllFilePath))
+                            {
+                                this._logger.Error("PrepareTaskFile fail taskId:{0}", task.Id);
+                                continue;
+                            }
 
                             AppDomain domain = null;
                             var ta = new AppDomainLoader<BaseTask>().Load(taskDllFilePath, task.ClassName, out domain);
@@ -191,20 +198,44 @@ namespace TaskManager.Node.SystemRuntime
 
             if (!File.Exists(taskPackageFilePath))
             {
-                var downloadResult = this._sdk.DownloadTaskFile(task.Id);
-                if (downloadResult.HasError)
+                if (!this.DownloadTaskFile(task.Id, taskPackageFilePath))
                 {
-                    this._logger.Error("download task file fail, taskId:{0}", task.Id);
                     TaskRuntimeInfo t = null;
                     this._taskInfos.TryRemove(task.Id, out t);
-                }
-                else
-                {
-                    downloadResult.Data.Seek(0, SeekOrigin.Begin);
-                    this._logger.Trace(downloadResult.Data.Length);
-                    DirectoryAndFileHelper.SaveFile(downloadResult.Data, taskPackageFilePath);
+                    return null;
                 }
             }
+            else
+            {
+                var sb = new StringBuilder();
+                using (var md5 = MD5.Create())
+                {
+                    using (var fileStream = new FileStream(taskPackageFilePath, FileMode.Open, FileAccess.Read))
+                    {
+                        md5.ComputeHash(fileStream);
+
+                        foreach (byte b in md5.Hash)
+                        {
+                            sb.Append(string.Format("{0:X2}", b));
+                        }
+                    }
+                }
+                if (!sb.ToString().Equals(task.FileSignature))
+                {
+                    if (File.Exists(taskPackageFilePath))
+                    {
+                        File.Delete(taskPackageFilePath);
+                    }
+
+                    if (!this.DownloadTaskFile(task.Id, taskPackageFilePath))
+                    {
+                        TaskRuntimeInfo t = null;
+                        this._taskInfos.TryRemove(task.Id, out t);
+                        return null;
+                    }
+                }
+            }
+
             var taskFileUnzipFolderPath = ServiceFileHelper.GetTaskFileUnzipFolderPath(this._rootPath,
                     task.Id);
             if (!Directory.Exists(taskFileUnzipFolderPath))
@@ -214,6 +245,23 @@ namespace TaskManager.Node.SystemRuntime
             }
 
             return string.Format("{0}{1}", taskFileUnzipFolderPath, task.DllName);
+        }
+
+        private bool DownloadTaskFile(string taskId, string savePath)
+        {
+            var downloadResult = this._sdk.DownloadTaskFile(taskId);
+            if (downloadResult.HasError)
+            {
+                this._logger.Error("download task file fail, taskId:{0} ; Message:{1}", taskId, downloadResult.ErrorMessage);
+                return false;
+            }
+            else
+            {
+                downloadResult.Data.Seek(0, SeekOrigin.Begin);
+                this._logger.Trace(downloadResult.Data.Length);
+                DirectoryAndFileHelper.SaveFile(downloadResult.Data, savePath);
+                return true;
+            }
         }
 
         #endregion

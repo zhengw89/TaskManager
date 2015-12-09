@@ -31,7 +31,7 @@ namespace TaskManager.Repository.Repositories.Base.Org
 
         public bool Create(User user)
         {
-            return base.Add(user);
+            return base.Add(user.ToT());
         }
 
         public User Get(string userId)

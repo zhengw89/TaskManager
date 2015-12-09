@@ -57,6 +57,12 @@ namespace TaskManager
                 "Users/{pageIndex}",
                 new { controller = "User", action = "Index", pageIndex = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                "CreateUser",
+                "CreateUser",
+                new { controller = "User", action = "Create" }
+            );
         }
 
         private static void RegisterTaskRoutes(RouteCollection routes)

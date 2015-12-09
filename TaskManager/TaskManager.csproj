@@ -124,6 +124,7 @@
     <Compile Include="Helper\CustomResult\DownloadResult.cs" />
     <Compile Include="Helper\CustomResult\Http403Result.cs" />
     <Compile Include="Helper\CustomResult\Http404Result.cs" />
+    <Compile Include="Helper\CustomValidation\IpValidationAttribute.cs" />
     <Compile Include="Helper\JsonNet.cs" />
     <Compile Include="Helper\ModelBinder\JsonModelBinder.cs" />
     <Compile Include="Helper\ModelBinder\JsonModelBinderContainer.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Helper\WebConfigHelper.cs" />
     <Compile Include="Models\Dev\CreateNodeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Org\CreateUserModel.cs" />
     <Compile Include="Models\Ta\CreateTaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -205,6 +207,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\CustomBsValidation.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -245,6 +248,7 @@
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Task\Create.cshtml" />
     <Content Include="Views\TaskJob\Index.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

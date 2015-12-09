@@ -8,5 +8,7 @@ namespace TaskManager.Service.Core
         ITaskManagerDb Db { get; }
 
         string RootPath { get; }
+
+        string UserId { get; }
     }
 }

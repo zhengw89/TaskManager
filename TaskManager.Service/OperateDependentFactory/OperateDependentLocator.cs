@@ -1,6 +1,7 @@
 ﻿using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
+using TaskManager.Service.Service.Org.UserOperator.Creator;
 using TaskManager.Service.Service.Org.UserOperator.Operator;
 using TaskManager.Service.Service.Org.UserOperator.Queryer;
 using TaskManager.Service.Service.Ta.TaskJobOperator.Operator;
@@ -44,6 +45,7 @@ namespace TaskManager.Service.OperateDependentFactory
             container.Register<LoginOperator>(db => new LoginOperatorDependent(db));
             container.Register<UserByIdQueryer>(db => new UserByIdQueryerDependent(db));
             container.Register<UserByConditionQueryer>(db => new UserByConditionQueryerDependent(db));
+            container.Register<UserCreator>(db => new UserCreatorDependent(db));
         }
 
         private void RegistTask(IDependentContainer container)

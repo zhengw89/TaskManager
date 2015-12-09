@@ -4,11 +4,11 @@
 @using TaskManager.LogicEntity.Entities.Org;
 @model TmProcessResult<PagedList<User>>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "用户列表";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>用户列表</h2>
 
 @if (Model.HasError)
 {
@@ -16,11 +16,17 @@
 }
 else
 {
-    <table class="table table-striped">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RouteLink("创建用户", "CreateUser", new { }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+    
+    <table class="table table-striped table-hover">
         <thead>
-            <th>ID</th>
-            <th>Name</th>
-            <th>CreateTime</th>
+            <th>用户ID</th>
+            <th>用户名称</th>
+            <th>添加时间</th>
         </thead>
         <tbody>
             @foreach (var user in @Model.Data)

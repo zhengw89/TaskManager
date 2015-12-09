@@ -4,11 +4,11 @@
 @using TaskManager.LogicEntity.Entities.Dev;
 @model TmProcessResult<PagedList<Node>>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "节点列表";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>节点列表</h2>
 
 @if (Model.HasError)
 {
@@ -16,15 +16,19 @@
 }
 else
 {
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RouteLink("创建节点", "NodeCreate", new { }, new { @class = "btn btn-default" })
+        </div>
+    </div>
     
-    @Html.RouteLink("NodeCreate", "NodeCreate")
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead>
-            <th>Name</th>
-            <th>IP</th>
-            <th>Port</th>
-            <th>Remark</th>
-            <th>CreateTime</th>
+            <th>节点名称</th>
+            <th>节点IP</th>
+            <th>节点监听端口</th>
+            <th>节点备注</th>
+            <th>节点创建时间</th>
         </thead>
         <tbody>
             @foreach (var node in @Model.Data)
