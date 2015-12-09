@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using NLog;
 using Quartz;
 using Quartz.Impl;
@@ -26,6 +28,7 @@ namespace TaskManager.Node.SystemRuntime
         private readonly ConcurrentDictionary<string, TaskRuntimeInfo> _taskInfos;
         private readonly IScheduler _sched;
 
+        private static readonly object LoadTaskLockObj = new object();
         private static readonly object LockObj = new object();
         private static TaskPoolManager _instance;
         public static TaskPoolManager Instance
@@ -67,7 +70,7 @@ namespace TaskManager.Node.SystemRuntime
         {
             lock (LockObj)
             {
-                this._sdkHost = _sdkHost;
+                this._sdkHost = host;
                 this._nodeId = nodeId;
                 this._rootPath = rootPath;
                 this._sdk = SdkFactory.CreateSdk(new SdkConfig(host));
@@ -81,7 +84,97 @@ namespace TaskManager.Node.SystemRuntime
                     this._taskInfos.Clear();
                 }
 
-                this.InitLoadTasks();
+                var th = new Thread(new ThreadStart(LoadTaskThreadMethod));
+                th.Start();
+            }
+        }
+
+        private void LoadTaskThreadMethod()
+        {
+            while (true)
+            {
+                lock (LoadTaskLockObj)
+                {
+                    var loadTaskResult = this._sdk.GetTasks(this._nodeId);
+                    if (loadTaskResult.HasError)
+                    {
+                        this._logger.Error("get task api error:{0}", loadTaskResult.ErrorMessage);
+                        return;
+                    }
+
+                    //unload task
+                    var unloadTaskIds = new List<string>();
+                    foreach (var taskInfo in this._taskInfos)
+                    {
+                        if (!loadTaskResult.Data.Any(a => a.Id.Equals(taskInfo.Key)))
+                        {
+                            unloadTaskIds.Add(taskInfo.Key);
+                        }
+                    }
+                    foreach (var unloadTaskId in unloadTaskIds)
+                    {
+                        var task = this._taskInfos[unloadTaskId];
+
+                        _sched.PauseTrigger(task.Trigger.Key);
+                        _sched.UnscheduleJob(task.Trigger.Key);
+                        _sched.DeleteJob(task.JobDetail.Key);
+
+                        TaskRuntimeInfo info = null;
+                        if (!this._taskInfos.TryRemove(unloadTaskId, out info))
+                        {
+                            this._logger.Error("Unload task fail, taskId:{0}", unloadTaskId);
+                        }
+                        else
+                        {
+                            AppDomain.Unload(info.AppDomain);
+
+                            var taskFileUnzipFolderPath =
+                                    ServiceFileHelper.GetTaskFileUnzipFolderPath(this._rootPath, unloadTaskId);
+                            DirectoryAndFileHelper.DeleteFolder(taskFileUnzipFolderPath);
+                        }
+                    }
+
+                    //load task
+                    foreach (var task in loadTaskResult.Data)
+                    {
+                        if (!this._taskInfos.ContainsKey(task.Id))
+                        {
+                            var taskDllFilePath = PrepareTaskFile(task);
+
+                            AppDomain domain = null;
+                            var ta = new AppDomainLoader<BaseTask>().Load(taskDllFilePath, task.ClassName, out domain);
+
+                            IJobDetail job = new JobDetailImpl(task.Id, null, typeof(TaskJob));
+                            ITrigger trigger = new CronTriggerImpl(task.Id, null, task.Cron);
+                            _sched.ScheduleJob(job, trigger);
+
+                            if (!this._taskInfos.TryAdd(task.Id, new TaskRuntimeInfo()
+                            {
+                                AppDomain = domain,
+                                TaskInfo = task,
+                                ExeTask = ta,
+                                TmSdk = SdkFactory.CreateSdk(new SdkConfig(this._sdkHost)),
+                                JobDetail = job,
+                                Trigger = trigger
+                            }))
+                            {
+                                AppDomain.Unload(domain);
+
+                                this._sched.PauseTrigger(trigger.Key);
+                                this._sched.UnscheduleJob(trigger.Key);
+                                this._sched.DeleteJob(job.Key);
+
+                                var taskFileUnzipFolderPath =
+                                    ServiceFileHelper.GetTaskFileUnzipFolderPath(this._rootPath, task.Id);
+                                DirectoryAndFileHelper.DeleteFolder(taskFileUnzipFolderPath);
+
+                                this._logger.Error("add task fail, taskId:{0}", task.Id);
+                            }
+                        }
+                    }
+                }
+
+                Thread.Sleep(1 * 60 * 1000);
             }
         }
 
@@ -92,65 +185,10 @@ namespace TaskManager.Node.SystemRuntime
 
         #region Private Method
 
-        private bool InitLoadTasks()
-        {
-            var loadTaskResult = this._sdk.GetTasks(this._nodeId);
-            if (loadTaskResult.HasError)
-            {
-                this._logger.Error("get task api error:{0}", loadTaskResult.ErrorMessage);
-                return false;
-            }
-
-            foreach (var task in loadTaskResult.Data)
-            {
-                try
-                {
-                    if (LoadTask(task))
-                    {
-                        IJobDetail job = new JobDetailImpl(task.Id, null, typeof(TaskJob));
-                        ITrigger trigger = new CronTriggerImpl(task.Id, null, task.Cron);
-                        _sched.ScheduleJob(job, trigger);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    this._logger.Error("load task exception:{0}", ex.Message);
-                }
-            }
-
-            return true;
-        }
-
-        private bool LoadTask(Task task)
-        {
-            this._logger.Trace("init task:{0}", task.Id);
-            if (!this._taskInfos.ContainsKey(task.Id))
-            {
-                var taskDllFilePath = PrepareTaskFile(task);
-                AppDomain domain = null;
-                var ta = new AppDomainLoader<BaseTask>().Load(taskDllFilePath, task.ClassName, out domain);
-
-                if (!this._taskInfos.TryAdd(task.Id, new TaskRuntimeInfo()
-                {
-                    AppDomain = domain,
-                    TaskInfo = task,
-                    ExeTask = ta,
-                    TmSdk = this._sdk
-                }))
-                {
-                    AppDomain.Unload(domain);
-                    this._logger.Error("add task fail, taskId:{0}", task.Id);
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         private string PrepareTaskFile(Task task)
         {
             var taskPackageFilePath = ServiceFileHelper.GetTaskPackageFilePath(this._rootPath, task.Id);
-            this._logger.Trace("task file path:{0}", taskPackageFilePath);
+
             if (!File.Exists(taskPackageFilePath))
             {
                 var downloadResult = this._sdk.DownloadTaskFile(task.Id);

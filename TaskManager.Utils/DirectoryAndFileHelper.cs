@@ -31,5 +31,27 @@ namespace TaskManager.Utils
 
             return re.Last();
         }
+
+        public static void DeleteFolder(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                return;
+            }
+
+            var currentFolder = new DirectoryInfo(folderPath);
+            FileInfo[] files = currentFolder.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                File.Delete(file.FullName);
+            }
+
+            foreach (DirectoryInfo childFolder in currentFolder.GetDirectories())
+            {
+                DeleteFolder(childFolder.FullName);
+            }
+
+            Directory.Delete(folderPath);
+        }
     }
 }
