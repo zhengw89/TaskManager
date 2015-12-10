@@ -64,6 +64,7 @@
     <Compile Include="SystemMonitor\MonitorManager.cs" />
     <Compile Include="SystemMonitor\NodeHeartBeatMonitor.cs" />
     <Compile Include="SystemRuntime\TaskJob.cs" />
+    <Compile Include="SystemRuntime\TaskLock.cs" />
     <Compile Include="SystemRuntime\TaskPoolManager.cs" />
     <Compile Include="SystemRuntime\TaskRuntimeInfo.cs" />
   </ItemGroup>
