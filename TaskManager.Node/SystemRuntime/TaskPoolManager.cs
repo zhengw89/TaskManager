@@ -128,11 +128,18 @@ namespace TaskManager.Node.SystemRuntime
                         }
                         else
                         {
-                            AppDomain.Unload(info.AppDomain);
+                            try
+                            {
+                                AppDomain.Unload(info.AppDomain);
 
-                            var taskFileUnzipFolderPath =
-                                    ServiceFileHelper.GetTaskFileUnzipFolderPath(this._rootPath, unloadTaskId);
-                            DirectoryAndFileHelper.DeleteFolder(taskFileUnzipFolderPath);
+                                var taskFileUnzipFolderPath =
+                                        ServiceFileHelper.GetTaskFileUnzipFolderPath(this._rootPath, unloadTaskId);
+                                DirectoryAndFileHelper.DeleteFolder(taskFileUnzipFolderPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                this._logger.Error("卸载任务 {0} 异常:{1}", task.TaskInfo.Name, ex.Message);
+                            }
                         }
                     }
 
@@ -162,7 +169,8 @@ namespace TaskManager.Node.SystemRuntime
                                 ExeTask = ta,
                                 TmSdk = SdkFactory.CreateSdk(new SdkConfig(this._sdkHost)),
                                 JobDetail = job,
-                                Trigger = trigger
+                                Trigger = trigger,
+                                Lock = new TaskLock()
                             }))
                             {
                                 AppDomain.Unload(domain);

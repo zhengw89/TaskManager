@@ -14,6 +14,8 @@ namespace TaskManager.Node.SystemRuntime
 
         public BaseTask ExeTask { get; set; }
 
+        public TaskLock Lock { get; set; }
+
         public ITmSdk TmSdk { get; set; }
 
         public IJobDetail JobDetail { get; set; }
