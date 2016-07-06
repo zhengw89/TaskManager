@@ -50,11 +50,20 @@ namespace TaskManager.AgentService
             {
                 _logger.Error("TaskPool load task fail ex:{0}", ex.Message);
             }
+
+            base.OnStart(args);
         }
 
         protected override void OnStop()
         {
             _logger.Info("Stop service");
+            base.OnStop();
+        }
+
+        protected override void OnShutdown()
+        {
+            _logger.Info("Shutdown service");
+            base.OnShutdown();
         }
     }
 }

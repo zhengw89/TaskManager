@@ -47,12 +47,14 @@ namespace TaskManager.Node.SystemMonitor
 
         public void StartMonitor()
         {
+            if (this._thread.IsAlive) return;
             this._logger.Info("StartMonitor:{0}", this.GetType());
             this._thread.Start();
         }
 
         public void StopMonitor()
         {
+            if (!this._thread.IsAlive) return;
             this._logger.Info("StopMonitor:{0}", this.GetType());
             this._thread.Abort();
         }

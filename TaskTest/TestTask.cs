@@ -12,7 +12,7 @@ namespace TaskTest
         {
             resultMessage = null;
 
-            using (var fs = new FileStream("D:\\A.txt", FileMode.OpenOrCreate))
+            using (var fs = new FileStream(string.Format("D:\\{0}.txt",DateTime.Now.ToString("yyyyMMdd")), FileMode.OpenOrCreate))
             {
                 using (var sw = new StreamWriter(fs, Encoding.UTF8))
                 {

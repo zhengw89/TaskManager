@@ -21,7 +21,7 @@ namespace TaskManager.Node.SystemRuntime
 {
     public class TaskPoolManager : IDisposable
     {
-        private readonly Logger _logger;
+        private readonly Logger _taskLogger;
 
         private string _sdkHost;
         private string _nodeId;
@@ -53,7 +53,7 @@ namespace TaskManager.Node.SystemRuntime
 
         private TaskPoolManager()
         {
-            this._logger = LogManager.GetLogger("TaskLogger");
+            this._taskLogger = LogManager.GetLogger("TaskLogger");
 
             this._taskInfos = new ConcurrentDictionary<string, TaskRuntimeInfo>();
 
@@ -100,7 +100,7 @@ namespace TaskManager.Node.SystemRuntime
                     var loadTaskResult = this._sdk.GetTasks(this._nodeId);
                     if (loadTaskResult.HasError)
                     {
-                        this._logger.Error("get task api error:{0}", loadTaskResult.ErrorMessage);
+                        this._taskLogger.Error("get task api error:{0}", loadTaskResult.ErrorMessage);
                         return;
                     }
 
@@ -124,7 +124,7 @@ namespace TaskManager.Node.SystemRuntime
                         TaskRuntimeInfo info = null;
                         if (!this._taskInfos.TryRemove(unloadTaskId, out info))
                         {
-                            this._logger.Error("Unload task fail, taskId:{0}", unloadTaskId);
+                            this._taskLogger.Error("Unload task fail, taskId:{0}", unloadTaskId);
                         }
                         else
                         {
@@ -138,7 +138,7 @@ namespace TaskManager.Node.SystemRuntime
                             }
                             catch (Exception ex)
                             {
-                                this._logger.Error("卸载任务 {0} 异常:{1}", task.TaskInfo.Name, ex.Message);
+                                this._taskLogger.Error("卸载任务 {0} 异常:{1}", task.TaskInfo.Name, ex.Message);
                             }
                         }
                     }
@@ -151,12 +151,21 @@ namespace TaskManager.Node.SystemRuntime
                             var taskDllFilePath = PrepareTaskFile(task);
                             if (string.IsNullOrEmpty(taskDllFilePath))
                             {
-                                this._logger.Error("PrepareTaskFile fail taskId:{0}", task.Id);
+                                this._taskLogger.Error("PrepareTaskFile fail taskId:{0}", task.Id);
                                 continue;
                             }
 
                             AppDomain domain = null;
-                            var ta = new AppDomainLoader<BaseTask>().Load(taskDllFilePath, task.ClassName, out domain);
+                            BaseTask ta = null;
+                            try
+                            {
+                                ta = new AppDomainLoader<BaseTask>().Load(taskDllFilePath, task.ClassName, out domain);
+                            }
+                            catch (Exception ex)
+                            {
+                                this._taskLogger.Fatal(string.Format("Load task AppDomain Exception:{0}", ex.Message));
+                                continue;
+                            }
 
                             IJobDetail job = new JobDetailImpl(task.Id, null, typeof(TaskJob));
                             ITrigger trigger = new CronTriggerImpl(task.Id, null, task.Cron);
@@ -183,7 +192,7 @@ namespace TaskManager.Node.SystemRuntime
                                     ServiceFileHelper.GetTaskFileUnzipFolderPath(this._rootPath, task.Id);
                                 DirectoryAndFileHelper.DeleteFolder(taskFileUnzipFolderPath);
 
-                                this._logger.Error("add task fail, taskId:{0}", task.Id);
+                                this._taskLogger.Error("add task fail, taskId:{0}", task.Id);
                             }
                         }
                     }
@@ -260,13 +269,13 @@ namespace TaskManager.Node.SystemRuntime
             var downloadResult = this._sdk.DownloadTaskFile(taskId);
             if (downloadResult.HasError)
             {
-                this._logger.Error("download task file fail, taskId:{0} ; Message:{1}", taskId, downloadResult.ErrorMessage);
+                this._taskLogger.Error("download task file fail, taskId:{0} ; Message:{1}", taskId, downloadResult.ErrorMessage);
                 return false;
             }
             else
             {
                 downloadResult.Data.Seek(0, SeekOrigin.Begin);
-                this._logger.Trace(downloadResult.Data.Length);
+                this._taskLogger.Trace(downloadResult.Data.Length);
                 DirectoryAndFileHelper.SaveFile(downloadResult.Data, savePath);
                 return true;
             }
