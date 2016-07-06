@@ -6,6 +6,7 @@ using TaskManager.Service.Interfaces.Org;
 using TaskManager.Service.Service.Org.UserOperator.Creator;
 using TaskManager.Service.Service.Org.UserOperator.Operator;
 using TaskManager.Service.Service.Org.UserOperator.Queryer;
+using TaskManager.Service.Service.Org.UserOperator.Updater;
 
 namespace TaskManager.Service.Service.Org
 {
@@ -60,6 +61,18 @@ namespace TaskManager.Service.Service.Org
                     userId, userName, password);
 
                 return base.ExeOperateProcess(creator);
+            });
+        }
+
+        public TmProcessResult<bool> EditUser(string userId, string userName)
+        {
+            return base.ExeProcess(db =>
+            {
+                var updater = new UserUpdater(
+                    base.ResloveProcessConfig<UserUpdater>(db),
+                    userId, userName);
+
+                return base.ExeOperateProcess(updater);
             });
         }
     }

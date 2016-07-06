@@ -134,6 +134,7 @@
     <Compile Include="Models\Dev\CreateNodeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Org\CreateUserModel.cs" />
+    <Compile Include="Models\Org\EditUserModel.cs" />
     <Compile Include="Models\Ta\CreateTaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -203,6 +204,7 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\Pu.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
@@ -249,6 +251,7 @@
     <Content Include="Views\Task\Create.cshtml" />
     <Content Include="Views\TaskJob\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

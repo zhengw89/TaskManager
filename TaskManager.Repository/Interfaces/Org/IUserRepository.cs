@@ -13,6 +13,8 @@ namespace TaskManager.Repository.Interfaces.Org
 
         bool Create(User user);
 
+        bool Update(User user);
+
         User Get(string userId);
 
         PagedList<User> GetByCondition(int pageIndex, int pageSize);

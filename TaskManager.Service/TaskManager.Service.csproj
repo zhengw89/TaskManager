@@ -74,6 +74,7 @@
     <Compile Include="Service\Org\UserOperator\Operator\LoginOperator.cs" />
     <Compile Include="Service\Org\UserOperator\Queryer\UserByConditionQueryer.cs" />
     <Compile Include="Service\Org\UserOperator\Queryer\UserByIdQueryer.cs" />
+    <Compile Include="Service\Org\UserOperator\Updater\UserUpdater.cs" />
     <Compile Include="Service\Org\UserService.cs" />
     <Compile Include="Service\Ta\TaskJobOperator\Operator\CompleteTaskJobOperator.cs" />
     <Compile Include="Service\Ta\TaskJobOperator\Operator\StartTaskJobOperator.cs" />

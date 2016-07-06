@@ -27,6 +27,7 @@ else
             <th>用户ID</th>
             <th>用户名称</th>
             <th>添加时间</th>
+            <th>操作</th>
         </thead>
         <tbody>
             @foreach (var user in @Model.Data)
@@ -35,6 +36,7 @@ else
                     <td>@user.Id</td>
                     <td>@user.Name</td>
                     <td>@user.CreateTime</td>
+                    <td>@Html.RouteLink("编辑", "EditUser", new { userId = user.Id }, new { })</td>
                 </tr>
             }
         </tbody>

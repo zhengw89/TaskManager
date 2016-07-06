@@ -34,6 +34,11 @@ namespace TaskManager.Repository.Repositories.Base.Org
             return base.Add(user.ToT());
         }
 
+        public bool Update(User user)
+        {
+            return base.Update(user.ToT());
+        }
+
         public User Get(string userId)
         {
             return base.BaseQuery.Equal("OU_Id", userId).Equal(IsActive, true).SingleOrDefault().FromT();

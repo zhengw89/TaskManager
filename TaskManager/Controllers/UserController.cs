@@ -28,6 +28,23 @@ namespace TaskManager.Controllers
             return base.ReturnView();
         }
 
+        [HttpGet]
+        public ActionResult Edit(string userId)
+        {
+            var service = base.ResolveService<IUserService>();
+            var userResult = service.GetById(userId);
+            if (userResult.HasError)
+            {
+                return base.RedirectToRoute("Users");
+            }
+
+            return base.ReturnView(new EditUserModel()
+            {
+                UserId = userResult.Data.Id,
+                UserName = userResult.Data.Name
+            });
+        }
+
         #endregion
 
         #region Post
@@ -50,6 +67,27 @@ namespace TaskManager.Controllers
             {
                 ViewBag.Error = result.Error.Message;
                 return base.ReturnView("Create", model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditUserModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return base.ReturnView("Edit", model);
+            }
+
+            var service = base.ResolveService<IUserService>();
+            var result = service.EditUser(model.UserId, model.UserName);
+            if (result.Data)
+            {
+                return base.RedirectToRoute("Users");
+            }
+            else
+            {
+                ViewBag.Error = result.Error.Message;
+                return base.ReturnView("Edit", model);
             }
         }
 

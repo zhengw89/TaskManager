@@ -63,6 +63,12 @@ namespace TaskManager
                 "CreateUser",
                 new { controller = "User", action = "Create" }
             );
+
+            routes.MapRoute(
+                "EditUser",
+                "EditUser/{userId}",
+                new { controller = "User", action = "Edit", userId = UrlParameter.Optional }
+            );
         }
 
         private static void RegisterTaskRoutes(RouteCollection routes)
