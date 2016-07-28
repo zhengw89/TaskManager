@@ -39,6 +39,13 @@ namespace TaskManager.Repository.Repositories.Base.Org
             return base.Update(user.ToT());
         }
 
+        public bool Delete(string userId)
+        {
+            var sql = new Sql();
+            sql.Where("OU_Id = @0", userId);
+            return base.Db.Delete<T_ORG_USER>(sql) >= 0;
+        }
+
         public User Get(string userId)
         {
             return base.BaseQuery.Equal("OU_Id", userId).Equal(IsActive, true).SingleOrDefault().FromT();

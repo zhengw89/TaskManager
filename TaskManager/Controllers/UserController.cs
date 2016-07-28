@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using TaskManager.Controllers.Base;
 using TaskManager.Models.Org;
 using TaskManager.Service.Interfaces.Org;
@@ -89,6 +90,15 @@ namespace TaskManager.Controllers
                 ViewBag.Error = result.Error.Message;
                 return base.ReturnView("Edit", model);
             }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(string userId)
+        {
+            var service = base.ResolveService<IUserService>();
+            service.DeleteUser(userId);
+
+            return base.RedirectToRoute("Users");
         }
 
         #endregion

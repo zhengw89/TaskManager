@@ -4,6 +4,7 @@ using TaskManager.LogicEntity.Entities;
 using TaskManager.LogicEntity.Entities.Org;
 using TaskManager.Service.Interfaces.Org;
 using TaskManager.Service.Service.Org.UserOperator.Creator;
+using TaskManager.Service.Service.Org.UserOperator.Deleter;
 using TaskManager.Service.Service.Org.UserOperator.Operator;
 using TaskManager.Service.Service.Org.UserOperator.Queryer;
 using TaskManager.Service.Service.Org.UserOperator.Updater;
@@ -73,6 +74,18 @@ namespace TaskManager.Service.Service.Org
                     userId, userName);
 
                 return base.ExeOperateProcess(updater);
+            });
+        }
+
+        public TmProcessResult<bool> DeleteUser(string userId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var deleter = new UserDeleter(
+                    base.ResloveProcessConfig<UserDeleter>(db),
+                    userId);
+
+                return base.ExeOperateProcess(deleter);
             });
         }
     }

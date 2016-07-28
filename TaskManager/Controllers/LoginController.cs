@@ -37,6 +37,8 @@ namespace TaskManager.Controllers
                     {
                         ContextHelper.SetCurrentUserId(userResult.Data.Id);
                         ContextHelper.SetCurrentUserName(userResult.Data.Name);
+
+                        FormsAuthentication.SetAuthCookie(userResult.Data.Id, false);
                         return RedirectToAction("Index", "Home");
                     }
                 }

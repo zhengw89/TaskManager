@@ -15,6 +15,8 @@ namespace TaskManager.Repository.Interfaces.Org
 
         bool Update(User user);
 
+        bool Delete(string userId);
+
         User Get(string userId);
 
         PagedList<User> GetByCondition(int pageIndex, int pageSize);

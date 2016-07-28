@@ -15,5 +15,7 @@ namespace TaskManager.Service.Interfaces.Org
         TmProcessResult<bool> CreateUser(string userId, string userName, string password);
 
         TmProcessResult<bool> EditUser(string userId, string userName);
+
+        TmProcessResult<bool> DeleteUser(string userId);
     }
 }
