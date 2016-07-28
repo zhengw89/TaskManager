@@ -1,4 +1,5 @@
 ﻿using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator;
+using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Queryer;
 using TaskManager.Service.Service.Dev.NodeOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
 using TaskManager.Service.Service.Org.UserOperator.Creator;
@@ -40,6 +41,7 @@ namespace TaskManager.Service.OperateDependentFactory
             container.Register<NodeCreator>(db => new NodeCreatorDependent(db));
 
             container.Register<NodeHeartBeatCreator>(db => new NodeHeartBeatCreatorDependent(db));
+            container.Register<NodeLatestHeartBeadQueryer>(db => new NodeLatestHeartBeadQueryerDependent(db));
         }
 
         private void RegistOrg(IDependentContainer container)

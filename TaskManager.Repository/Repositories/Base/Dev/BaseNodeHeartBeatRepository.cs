@@ -27,5 +27,16 @@ namespace TaskManager.Repository.Repositories.Base.Dev
         {
             return base.Add(heartBeat.ToT());
         }
+
+        public NodeHeartBeat GetLatestByNode(string nodeId)
+        {
+            return
+                base.BaseQuery.Equal("NODE_Id", nodeId)
+                    .Equal(IsActive, true)
+                    .SkipTake(0, 1)
+                    .OrderBy("CreateTime DESC")
+                    .FirstOrDefault()
+                    .FromT();
+        }
     }
 }

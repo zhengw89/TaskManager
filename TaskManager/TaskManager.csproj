@@ -132,6 +132,7 @@
     <Compile Include="Helper\RequestHelper.cs" />
     <Compile Include="Helper\WebConfigHelper.cs" />
     <Compile Include="Models\Dev\CreateNodeModel.cs" />
+    <Compile Include="Models\Dev\NodeItemViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Org\CreateUserModel.cs" />
     <Compile Include="Models\Org\EditUserModel.cs" />

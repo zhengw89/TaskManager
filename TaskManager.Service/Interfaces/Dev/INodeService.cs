@@ -14,5 +14,10 @@ namespace TaskManager.Service.Interfaces.Dev
         TmProcessResult<List<Node>> GetAllNode();
 
         TmProcessResult<bool> CreateNodeHeartBeat(string nodeId);
+
+
+
+
+        TmProcessResult<List<NodeHeartBeat>> GetLatestHeartBeat(List<string> nodeIds);
     }
 }

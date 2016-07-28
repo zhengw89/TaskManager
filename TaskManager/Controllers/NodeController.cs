@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using TaskManager.Controllers.Base;
+using TaskManager.LogicEntity;
+using TaskManager.LogicEntity.Entities;
 using TaskManager.Models.Dev;
 using TaskManager.Service.Interfaces.Dev;
 
@@ -18,8 +22,29 @@ namespace TaskManager.Controllers
         public ActionResult Index(int pageIndex = 1)
         {
             var service = base.ResolveService<INodeService>();
-            var result = service.GetByCondition(pageIndex, DefaultPageSize);
-            return base.ReturnView(result);
+            var queryResult = service.GetByCondition(pageIndex, DefaultPageSize);
+
+            var vm = new TmProcessResult<PagedList<NodeItemViewModel>>(queryResult.Error);
+            if (!vm.HasError && queryResult.Data != null)
+            {
+                var hbQueryResult = service.GetLatestHeartBeat(queryResult.Data.Select(a => a.Id).Distinct().ToList());
+                if (!hbQueryResult.HasError)
+                {
+                    vm.Data = new PagedList<NodeItemViewModel>();
+                    foreach (var node in queryResult.Data)
+                    {
+                        vm.Data.Add(new NodeItemViewModel(node,
+                            hbQueryResult.Data.SingleOrDefault(a => a.NodeId.Equals(node.Id))));
+                    }
+                    vm.Data.CopyPagedInfo(queryResult.Data);
+                }
+                else
+                {
+                    vm.Error = hbQueryResult.Error;
+                }
+            }
+
+            return base.ReturnView(vm);
         }
 
         [HttpGet]

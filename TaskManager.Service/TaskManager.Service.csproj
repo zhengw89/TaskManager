@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceConfig.cs" />
     <Compile Include="Service\Dev\NodeHeartBeatOperator\Creator\NodeHeartBeatCreator.cs" />
+    <Compile Include="Service\Dev\NodeHeartBeatOperator\Queryer\NodeLatestHeartBeadQueryer.cs" />
     <Compile Include="Service\Dev\NodeOperator\Creator\NodeCreator.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\AllNodeQueryer.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\NodeByConditionQueryer.cs" />

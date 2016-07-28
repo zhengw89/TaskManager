@@ -5,5 +5,7 @@ namespace TaskManager.Repository.Interfaces.Dev
     public interface INodeHeartBeatRepository
     {
         bool Create(NodeHeartBeat heartBeat);
+
+        NodeHeartBeat GetLatestByNode(string nodeId);
     }
 }
