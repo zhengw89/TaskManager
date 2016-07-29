@@ -136,6 +136,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Org\CreateUserModel.cs" />
     <Compile Include="Models\Org\EditUserModel.cs" />
+    <Compile Include="Models\Shared\PaginationViewModel.cs" />
     <Compile Include="Models\Ta\CreateTaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -254,6 +255,7 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Node\Detail.cshtml" />
+    <Content Include="Views\Shared\PaginationPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,5 @@
 ﻿@using TaskManager.Helper.CustomHtmlHelper
+@using TaskManager.Models.Shared
 @model TaskManager.LogicEntity.TmProcessResult<TaskManager.LogicEntity.Entities.PagedList<TaskManager.LogicEntity.Entities.Ta.TaskJob>>
 @{
     ViewBag.Title = "任务执行列表";
@@ -36,7 +37,9 @@ else
             }
         </tbody>
     </table>
-    <ul class="pagination">
-        @Html.PageLinks(@Model.Data, x => Url.Action("Index", new { pageIndex = x }))
-    </ul>
+    @Html.Partial("PaginationPartialView", new PaginationViewModel()
+    {
+        PagedList = Model.Data,
+        GenerateUrlFunc = (index) => Url.Action("Index", new { pageIndex = index })
+    })
 }
