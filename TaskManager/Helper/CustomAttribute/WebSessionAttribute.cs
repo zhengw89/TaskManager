@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace TaskManager.Helper.CustomAttribute
 {
@@ -21,7 +22,12 @@ namespace TaskManager.Helper.CustomAttribute
                 return true;
             }
 
-            if (String.IsNullOrEmpty(ContextHelper.GetCurrentUserId()))
+            //if (String.IsNullOrEmpty(ContextHelper.GetCurrentUserId()))
+            //{
+            //    return false;
+            //}
+
+            if (!httpContext.User.Identity.IsAuthenticated)
             {
                 return false;
             }
