@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TaskManager.Controllers.Base;
@@ -48,6 +49,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
+        public ActionResult Detail(string nodeId)
+        {
+            var service = base.ResolveService<INodeService>();
+            var result = service.GetNodeById(nodeId);
+            return base.ReturnView(result);
+        }
+
+        [HttpGet]
         public ActionResult Create()
         {
             return base.ReturnView();
@@ -77,6 +86,15 @@ namespace TaskManager.Controllers
 
 
             return base.ReturnView("Create", model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(string nodeId)
+        {
+            var service = base.ResolveService<INodeService>();
+            service.DeleteNode(nodeId);
+
+            return RedirectToAction("Index");
         }
 
         #endregion

@@ -12,6 +12,8 @@ namespace TaskManager.Repository.Interfaces.Dev
 
         bool Create(Node node);
 
+        bool Delete(string nodeId);
+
         List<Node> GetAll(bool onlyAvailable);
 
         Node GetById(string id);

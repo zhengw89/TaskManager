@@ -40,6 +40,13 @@ namespace TaskManager.Repository.Repositories.Base.Dev
             return base.Add(node.ToT());
         }
 
+        public bool Delete(string nodeId)
+        {
+            var sql = new Sql();
+            sql.Where("NODE_Id = @0", nodeId);
+            return base.Db.Delete<T_DEV_NODE>(sql) >= 0;
+        }
+
         public List<Node> GetAll(bool onlyAvailable)
         {
             var bq = base.BaseQuery;

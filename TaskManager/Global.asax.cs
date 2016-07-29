@@ -41,11 +41,23 @@ namespace TaskManager
                 "Nodes/{pageIndex}",
                 new { controller = "Node", action = "Index", pageIndex = UrlParameter.Optional }
             );
+            //节点详情
+            routes.MapRoute(
+                "Node",
+                "Node/{nodeId}",
+                new { controller = "Node", action = "Detail", nodeId = UrlParameter.Optional }
+            );
             //创建节点
             routes.MapRoute(
                 "NodeCreate",
                 "NodeCreate",
                 new { controller = "Node", action = "Create" }
+            );
+            //删除节点
+            routes.MapRoute(
+                "NodeDelete",
+                "NodeDelete",
+                new { controller = "Node", action = "Delete" }
             );
         }
 

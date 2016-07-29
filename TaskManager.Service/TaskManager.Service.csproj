@@ -68,8 +68,10 @@
     <Compile Include="Service\Dev\NodeHeartBeatOperator\Creator\NodeHeartBeatCreator.cs" />
     <Compile Include="Service\Dev\NodeHeartBeatOperator\Queryer\NodeLatestHeartBeadQueryer.cs" />
     <Compile Include="Service\Dev\NodeOperator\Creator\NodeCreator.cs" />
+    <Compile Include="Service\Dev\NodeOperator\Deleter\NodeDeleter.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\AllNodeQueryer.cs" />
     <Compile Include="Service\Dev\NodeOperator\Queryer\NodeByConditionQueryer.cs" />
+    <Compile Include="Service\Dev\NodeOperator\Queryer\NodeByIdQueryer.cs" />
     <Compile Include="Service\Dev\NodeService.cs" />
     <Compile Include="Service\Org\UserOperator\Creator\UserCreator.cs" />
     <Compile Include="Service\Org\UserOperator\Deleter\UserDeleter.cs" />

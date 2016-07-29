@@ -1,0 +1,66 @@
+﻿@model TaskManager.LogicEntity.TmProcessResult<TaskManager.LogicEntity.Entities.Dev.Node>
+@{
+    ViewBag.Title = "节点详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>节点详情</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        @ViewBag.Error
+    </div>
+}
+else
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                @Html.Label("ID")
+            </div>
+            <div class="col-sm-10 control-label" style="text-align: left">
+                @Model.Data.Id
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                @Html.Label("节点名称")
+            </div>
+            <div class="col-sm-10 control-label" style="text-align: left">
+                @Model.Data.Name
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                @Html.Label("IP")
+            </div>
+            <div class="col-sm-10 control-label" style="text-align: left">
+                @Model.Data.IP
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                @Html.Label("节点端口")
+            </div>
+            <div class="col-sm-10 control-label" style="text-align: left">
+                @Model.Data.Port
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                @Html.Label("节点备注")
+            </div>
+            <div class="col-sm-10 control-label" style="text-align: left">
+                @Model.Data.Remark
+            </div>
+        </div>
+
+    </div>
+}

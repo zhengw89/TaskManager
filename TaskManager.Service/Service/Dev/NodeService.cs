@@ -6,6 +6,7 @@ using TaskManager.Service.Interfaces.Dev;
 using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Queryer;
 using TaskManager.Service.Service.Dev.NodeOperator.Creator;
+using TaskManager.Service.Service.Dev.NodeOperator.Deleter;
 using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
 
 namespace TaskManager.Service.Service.Dev
@@ -29,6 +30,18 @@ namespace TaskManager.Service.Service.Dev
             });
         }
 
+        public TmProcessResult<bool> DeleteNode(string nodeId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var deleter = new NodeDeleter(
+                    base.ResloveProcessConfig<NodeDeleter>(db),
+                    nodeId);
+
+                return base.ExeOperateProcess(deleter);
+            });
+        }
+
         public TmProcessResult<PagedList<Node>> GetByCondition(int pageIndex, int pageSize)
         {
             return base.ExeProcess(db =>
@@ -46,6 +59,18 @@ namespace TaskManager.Service.Service.Dev
             return base.ExeProcess(db =>
             {
                 var queryer = new AllNodeQueryer(base.ResloveProcessConfig<AllNodeQueryer>(db));
+
+                return base.ExeQueryProcess(queryer);
+            });
+        }
+
+        public TmProcessResult<Node> GetNodeById(string nodeId)
+        {
+            return base.ExeProcess(db =>
+            {
+                var queryer = new NodeByIdQueryer(
+                    base.ResloveProcessConfig<NodeByIdQueryer>(db),
+                    nodeId);
 
                 return base.ExeQueryProcess(queryer);
             });

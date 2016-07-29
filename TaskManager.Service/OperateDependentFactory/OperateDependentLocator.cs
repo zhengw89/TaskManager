@@ -1,6 +1,7 @@
 ﻿using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Creator;
 using TaskManager.Service.Service.Dev.NodeHeartBeatOperator.Queryer;
 using TaskManager.Service.Service.Dev.NodeOperator.Creator;
+using TaskManager.Service.Service.Dev.NodeOperator.Deleter;
 using TaskManager.Service.Service.Dev.NodeOperator.Queryer;
 using TaskManager.Service.Service.Org.UserOperator.Creator;
 using TaskManager.Service.Service.Org.UserOperator.Deleter;
@@ -38,7 +39,9 @@ namespace TaskManager.Service.OperateDependentFactory
         {
             container.Register<AllNodeQueryer>(db => new AllNodeQueryerDependent(db));
             container.Register<NodeByConditionQueryer>(db => new NodeByConditionQueryerDependent(db));
+            container.Register<NodeByIdQueryer>(db => new NodeByIdQueryerDependent(db));
             container.Register<NodeCreator>(db => new NodeCreatorDependent(db));
+            container.Register<NodeDeleter>(db => new NodeDeleterDependent(db));
 
             container.Register<NodeHeartBeatCreator>(db => new NodeHeartBeatCreatorDependent(db));
             container.Register<NodeLatestHeartBeadQueryer>(db => new NodeLatestHeartBeadQueryerDependent(db));

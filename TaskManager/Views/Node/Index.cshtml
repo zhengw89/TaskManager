@@ -1,7 +1,6 @@
 ﻿@using TaskManager.Helper.CustomHtmlHelper
 @using TaskManager.LogicEntity;
 @using TaskManager.LogicEntity.Entities;
-@using TaskManager.LogicEntity.Entities.Dev;
 @model TmProcessResult<PagedList<TaskManager.Models.Dev.NodeItemViewModel>>
 @{
     ViewBag.Title = "节点列表";
@@ -24,23 +23,20 @@ else
     
     <table class="table table-striped table-hover">
         <thead>
-            <th>ID</th>
             <th>节点名称</th>
             <th>节点IP</th>
             <th>节点监听端口</th>
-            <th>节点备注</th>
             <th>节点创建时间</th>
             <th>状态</th>
+            <th>操作</th>
         </thead>
         <tbody>
             @foreach (var node in @Model.Data)
             {
                 <tr>
-                    <td>@node.Id</td>
-                    <td>@node.Name</td>
+                    <td>@Html.RouteLink(node.Name, "Node", new { nodeId = node.Id }, new { })</td>
                     <td>@node.IP</td>
                     <td>@node.Port</td>
-                    <td>@node.Remark</td>
                     <td>@node.CreateTime</td>
                     @if (node.LatestHeartBeat.HasValue)
                     {
@@ -57,6 +53,32 @@ else
                     {
                         <td style="color: red">Offline</td>
                     }
+                    <td>
+                        <a href="#" data-toggle="modal" data-target="#@string.Format("tDeleteModal-{0}", node.Id)">删除</a>
+                        <div id="@string.Format("tDeleteModal-{0}", node.Id)" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="@string.Format("tDeleteModalLabel-{0}", node.Id)">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    @using (Html.BeginRouteForm("NodeDelete", FormMethod.Post, null))
+                                    {
+                                        @Html.Hidden("nodeId", node.Id)
+
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="@string.Format("tDeleteModalLabel-{0}", node.Id)">删除节点
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            确定要 <em>删除节点</em> <strong>@node.Name</strong> ？
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button class="btn btn-primary" type="submit">确定</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
